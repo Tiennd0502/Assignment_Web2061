@@ -4,26 +4,41 @@ $(function() {
   const editFormCate = document.querySelector('.form-edit-category');
   let idCate;
   fetch(urlCate, { method: 'GET' })
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(cate => {
-        renderCate(cate);
-      })
-    });
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(cate => {
+      renderCate(cate);
+    })
+  });
+
+  const Slug = (str) => {
+    str = str.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+    str = str.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+    str = str.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+    str = str.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+    str = str.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+    str = str.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+    str = str.replace(/đ/gi, 'd');
+    str = str.replace(/\s+/g, '-');
+    str = str.replace(/[^0-9 a-z A-Z]+/g, '-');
+    str = str.replace(/^-|-$/g, '');
+    return str;
+  }
+    // end function Slug()
   // view cate item
   const renderCate = (cate) => {
-      const template = `
-					<tr data-id="${cate.id}">
-	          <td><input type="checkbox" name=""></td>
-	          <td>${cate.id}</td>
-            <td><img src="public/images/categories/${cate.image}" alt="IMG"></td>
-	          <td>${cate.name}</td>
-	          <td>${cate.slug}</td>
-	          <td>
-	            <a class="btn-edit btn btn-outline-primary">Sửa</a>
-	            <a class="btn-del btn btn-outline-danger" >Xóa</a>
-	          </td>
-	        </tr>`;
+    const template = `
+    <tr data-id="${cate.id}">
+    <td><input type="checkbox" name=""></td>
+    <td>${cate.id}</td>
+    <td><img src="public/images/categories/${cate.image}" alt="IMG"></td>
+    <td>${cate.name}</td>
+    <td>${cate.slug}</td>
+    <td>
+    <a class="btn-edit btn btn-outline-primary">Sửa</a>
+    <a class="btn-del btn btn-outline-danger" >Xóa</a>
+    </td>
+    </tr>`;
       // $('#list-cate').append(template);
       // $('#list-cate')[0].insertAdjacentHTML('beforeend', template);
       const viewCate = document.querySelector('#list-cate');
@@ -36,8 +51,8 @@ $(function() {
         delCate.addEventListener('click', (el) => {
           // console.log('deleted '+ cate.name);
           fetch(`${urlCate}/${cate.id}`, { method: 'DELETE' })
-            .then(res => res.json())
-            .then(() => location.reload());
+          .then(res => res.json())
+          .then(() => location.reload());
         });
       }
       // end Delete category
@@ -58,68 +73,58 @@ $(function() {
     }
     // end Function renderCate();
 
-  const Slug = (str) => {
-      str = str.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
-      str = str.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
-      str = str.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
-      str = str.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
-      str = str.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
-      str = str.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
-      str = str.replace(/đ/gi, 'd');
-      str = str.replace(/\s+/g, '-');
-      str = str.replace(/[^0-9 a-z A-Z]+/g, '-');
-      str = str.replace(/^-|-$/g, '');
-      return str;
-    }
-    // end function Slug()
 
-  const name = document.querySelector('#name');
-  const slug = document.querySelector('#slug');
-  name.addEventListener('keyup', (el) => {
-    slug.value = Slug(name.value);
-  }, false);
-  const updateName = document.querySelector('#update-name');
-  const updateSlug = document.querySelector('#update-slug');
-  if (updateName) {
-    updateName.addEventListener('keyup', (el) => {
-      updateSlug.value = Slug(updateName.value);
-    }, false);
-  }
+
+    const name = document.querySelector('#name');
+    const slug = document.querySelector('#slug');
+    if(slug){
+      name.addEventListener('keyup', (el) => {
+        slug.value = Slug(name.value);
+      }, false);
+    }
+    const updateName = document.querySelector('#update-name');
+    const updateSlug = document.querySelector('#update-slug');
+    if (updateSlug) {
+      updateName.addEventListener('keyup', (el) => {
+        updateSlug.value = Slug(updateName.value);
+      }, false);
+    }
   // $('#name').keyup(function(event) {
   // 	$('#slug').val(Slug($(this).val().replace(/[^0-9 a-z A-Z]+/g,'-'));
   // });
 
   // add a category
-  addFormCate.addEventListener('submit', (el) => {
+  if(addFormCate){
+    addFormCate.addEventListener('submit', (el) => {
       el.preventDefault();
       // console.log('add' + addFormCate.name.value);
       fetch(urlCate, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: addFormCate.name.value,
-            slug: addFormCate.slug.value,
-            image: addFormCate.image.files[0].name,
-          })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: addFormCate.name.value,
+          slug: addFormCate.slug.value,
+          image: addFormCate.image.files[0].name,
         })
-        .then(res => res.json())
-        .then(data => {
-          const dataArr = [];
-          dataArr.push(data);
-          renderCate(data);
-          $('#add-category').modal('hide');
-          addFormCate.reset();
-        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const dataArr = [];
+        dataArr.push(data);
+        renderCate(data);
+        $('#add-category').modal('hide');
+        addFormCate.reset();
+      })
     })
+  }
     // end add category
     // edit category
-  if (editFormCate) {
-    editFormCate.addEventListener('submit', (el) => {
-      el.preventDefault();
-      // console.log('edit' + editFormCate.name.value);
-      fetch(`${urlCate}/${idCate}`, {
+    if (editFormCate) {
+      editFormCate.addEventListener('submit', (el) => {
+        el.preventDefault();
+        fetch(`${urlCate}/${idCate}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -136,26 +141,121 @@ $(function() {
           $('#edit-category').modal('hide');
           editFormCate.reset();
         });
+      })
+    }
+
+  //  brand  
+  const urlBrand = 'http://localhost:3000/brands';
+  const addFormBrand = document.querySelector('.form-add-brand');
+  const editFormBrand = document.querySelector('.form-edit-brand');
+  let idBrand;
+  fetch(urlBrand, { method: 'GET' })
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(brand => {
+      renderBrand(brand);
     })
-  }
+  });
+  // view brand item
+  const renderBrand = (brand) => {
+    const template = `
+    <tr data-id="${brand.id}">
+    <td><input type="checkbox" name=""></td>
+    <td>${brand.id}</td>
+    <td><img src="public/images/brands/${brand.image}" alt="IMG"></td>
+    <td>${brand.name}</td>
+    <td>
+    <a class="btn-edit btn btn-outline-primary">Sửa</a>
+    <a class="btn-del btn btn-outline-danger" >Xóa</a>
+    </td>
+    </tr>`;
+    const viewBrand = document.querySelector('#list-brand');
+    if (viewBrand) {
+      viewBrand.insertAdjacentHTML('beforeend', template);
+    }
+      // delete brand
+      const delBrand = document.querySelector(`[data-id= '${brand.id}'] .btn-del`);
+      if (delBrand) {
+        delBrand.addEventListener('click', (el) => {
+          fetch(`${urlBrand}/${brand.id}`, { method: 'DELETE' })
+          .then(res => res.json())
+          .then(() => location.reload());
+        });
+      }
+      // end Delete category
+
+      // edit Cate
+      const editBrand = document.querySelector(`[data-id='${brand.id}'] .btn-edit`);
+
+      if (editBrand) {
+        editBrand.addEventListener('click', (el) => {
+          $('#edit-brand').modal('show');
+          editFormBrand.name.value = brand.name;
+          idBrand = brand.id;
+          $('#edit-brand img').attr('src', `public/images/brands/${brand.image}`);
+          $('#edit-brand img').parent().removeClass('d-none');
+        })
+      }
+    }
+    // end Function renderCate();
+
+  // add a Brand
+  addFormBrand.addEventListener('submit', (el) => {
+    el.preventDefault();
+      // console.log('add' + addFormCate.name.value);
+      fetch(urlBrand, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: addFormBrand.name.value,
+          image: addFormBrand.image.files[0].name,
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const dataArr = [];
+        dataArr.push(data);
+        renderCate(data);
+        $('#add-brand').modal('hide');
+        addFormBrand.reset();
+      })
+    })
+    // end add brand
+    // edit brand
+    if (editFormBrand) {
+      editFormBrand.addEventListener('submit', (el) => {
+        el.preventDefault();
+        fetch(`${urlBrand}/${idBrand}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: editFormBrand.name.value,
+            image: editFormBrand.image.files[0].name,
+
+          })
+        })
+        .then(res => res.json())
+        .then(() => {
+          $('#edit-brand').modal('hide');
+          editFormBrand.reset();
+        });
+      })
+    }
+
+
+
+
 
 
 
   // Insert image
   $(".js-image-item").on('change', function() {
-    console.log("hello");
     if ($(this).val() != '') {
       $(this).parent().prev('li.img-box').addClass('d-none');
-      // nó thay dổi
-      // lấy data-edit truỳen cho input
-      // chi tiết
-      // let parent = $(this).parent().prev('li.img-box');
-      // let iconClose = parent.children('.icon-close');
-      // let link = iconClose.data('edit');
-      // let inputLink = parent.children('input');
-      // inputLink.val(link);
-      // console.log(inputLink.val());
-      // cách ngắn nhất
       $(this).parent().prev('li.img-box').children('input').val($(this).parent().prev('li.img-box').children('.icon-close').data('edit'));
       // console.log($(this).parent().prev('li.img-box').children('input').val());
 
@@ -296,6 +396,7 @@ $(function() {
         }
       });
     });
+
   });
 
 

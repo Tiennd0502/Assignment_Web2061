@@ -220,12 +220,12 @@
 						<ul class="metismenu" id="side-menu">
 							<li class="menu-title">Navigation</li>
 							<li>
-								<a href="admin.html" class="active"><i class="fas fa-tasks"></i>
+								<a href="admin.html"><i class="fas fa-tasks"></i>
 									<span>  Loại hàng </span>
 								</a>
 							</li>
 							<li>
-								<a href="brand.html">
+								<a href="brand.html" class="active">
 									<i class="fas fa-trademark"></i>
 									<span> Thương hiệu</span>
 								</a>
@@ -293,39 +293,35 @@
 						<div class="row mb-2">
 							<div class="col-10">
 								<form class="form-inline">
-									<input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm danh mục" aria-label="Search" style="width: 25%">
+									<input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm thương hiệu" aria-label="Search" style="width: 25%">
 									<button class="btn btn-dark my-2 my-sm-0" type="submit"><i class="far fa-search"></i></button>
 								</form>
 							</div>
 							<div class="col-md-2 text-right">
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCate">
-									Thêm danh mục
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBrand">
+									Thêm thương hiệu
 								</button>
 							</div>
 						</div>
 						<!-- Modal add cate -->
-						<div class="modal fade" id="addCate" tabindex="-1" aria-labelledby="addCateLabel" aria-hidden="true">
+						<div class="modal fade" id="addBrand" tabindex="-1" aria-labelledby="addBrandLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="addCateLabel">Thêm danh mục</h5>
+										<h5 class="modal-title" id="addBrandLabel">Thêm thương hiệu</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<div class="modal-body">
-										<form class="form-add-category">
+										<form class="form-add-brand">
 											<div class="form-group">
-												<label for="name">Tên danh mục</label>
-												<input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên danh mục...">
-											</div>
-											<div class="form-group">
-												<label for="slug">Tên không dấu</label>
-												<input type="text" readonly="" name="slug" class="form-control" id="slug">
+												<label for="name">Tên thương hiệu</label>
+												<input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên thương hiệu...">
 											</div>
 											<div class="form-group">
 												<div class="form-upload" id="image">
-													<label class="insert-attach" for="image-item"><i class="fas fa-camera-retro mr-2"></i> Ảnh đại diện</label>
+													<label class="insert-attach" for="image-item"><i class="fas fa-camera-retro mr-2"></i> Logo thương hiệu</label>
 												</div>
 												<div class="list-attach">
 													<ul class="attach-view" id="attach-view-image">
@@ -348,28 +344,24 @@
 							</div>
 						</div>
 						<!-- Modal edit cate -->
-						<div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="edit-categoryLabel" aria-hidden="true">
+						<div class="modal fade" id="edit-brand" tabindex="-1" aria-labelledby="edit-brandLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="editCateLabel">Sửa danh mục</h5>
+										<h5 class="modal-title" id="editCateLabel">Sửa thương hiệu</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<div class="modal-body">
-										<form class="form-edit-category">
+										<form class="form-edit-brand">
 											<div class="form-group">
-												<label for="name">Tên danh mục</label>
-												<input type="text" class="form-control" id="update-name" name="name"  placeholder="Nhập tên danh mục...">
-											</div>
-											<div class="form-group">
-												<label for="slug">Tên không dấu</label>
-												<input type="text" readonly="" name="slug" class="form-control" id="update-slug">
+												<label for="name">Tên thương hiệu</label>
+												<input type="text" class="form-control" id="update-name" name="name"  placeholder="Nhập tên thương hiệu...">
 											</div>
 											<div class="form-group">
 												<div class="form-upload" id="image">
-													<label class="insert-attach" for="image-edit"><i class="fas fa-camera-retro mr-2"></i> Ảnh đại diện</label>
+													<label class="insert-attach" for="image-edit"><i class="fas fa-camera-retro mr-2"></i> Logo thương hiệu</label>
 												</div>
 												<div class="list-attach">
 													<ul class="attach-view" id="attach-view-image">
@@ -391,7 +383,7 @@
 								</div>
 							</div>
 						</div>
-						<!-- Danh sách danh mục -->
+						<!-- Danh sách thương hiệu -->
 						<form action="" method="POST">
 							<div class="table-responsive mt-4">
 								<table class="table table-hover">
@@ -400,12 +392,11 @@
 											<th><input type="checkbox" name=""></th>
 											<th>Id</th>
 											<th>Hình ảnh</th>
-											<th>Tên có dấu</th>
-											<th>Tên không dấu</th>
+											<th>Tên thương hiệu</th>
 											<th></th>
 										</tr>
 									</thead>
-									<tbody id="list-cate">
+									<tbody id="list-brand">
 										
 									</tbody>
 								</table>

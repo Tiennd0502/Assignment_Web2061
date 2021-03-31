@@ -1,13 +1,31 @@
 $(function() {
   // Product
   const urlCate = 'http://localhost:3000/categories';
+  const urlBrand = 'http://localhost:3000/brands';
   const urlProduct = ' http://localhost:3000/products';
+  // load list category
+  $.get(urlCate, (data) => {
+    let str = '';
+    data.forEach(cate => {
+      str += `<option value="${cate.id}">${cate.name}</option>`
+    })
+    $('.category-id').append(str);
+  });
+  //  load list brand
+   $.get(urlBrand, (data) => {
+    let str = '';
+    data.forEach(brand => {
+      str += `<option value="${brand.id}">${brand.name}</option>`
+    })
+    $('.brand-id').append(str);
+  });
+   // cofig form product
   const addFormPrd = document.querySelector('.form-add-product');
   const editFormPrd = document.querySelector('.form-edit-product');
   let idPrd;
   // Pagination 
   let _currentPage = 1;
-  let _limit = 10;
+  let _limit = 5;
   let length;
   $.get(`${urlProduct}?_page=${_currentPage}&_limit=${_limit}`, (data) => {
     data.forEach(product => {
@@ -147,6 +165,8 @@ $(function() {
     editPrd.addEventListener('click', (el) => {
       $('#edit-product').modal('show');
       editFormPrd.name.value = product.name;
+      editFormPrd.category_id.value = product.category_id;
+      editFormPrd.brand_id.value = product.brand_id;
       editFormPrd.price.value = product.price;
       editFormPrd.discount.value = product.discount;
       editFormPrd.category_id.value = product.category_id;
@@ -159,64 +179,63 @@ $(function() {
   }
 
   //  add product
-  addFormPrd.addEventListener('submit', (el) => {
+  if(addFormPrd){
+    addFormPrd.addEventListener('submit', (el) => {
+        el.preventDefault();
+        $.ajax({
+            url: urlProduct,
+            type: 'POST',
+            data: {
+              name: addFormPrd.name.value,
+              category_id: addFormPrd.category_id.value,
+              brand_id: addFormPrd.brand_id.value,
+              price: addFormPrd.price.value,
+              discount: addFormPrd.discount.value,
+              desc: CKEDITOR.instances['Description'].getData(),
+              image: addFormPrd.image.files[0].name,
+            },
+          })
+          .done((data) => {
+            renderProduct(data);
+            addFormPrd.reset();
+            $('.img-box').addClass('d-none');
+            CKEDITOR.instances['Description'].setData('');
+            $("#add-product").modal('hide');
+          })
+          .fail(() => console.log("error"))
+          .always(() => console.log("complete"));
+      })
+  };
+  // edit product
+  if(editFormPrd){
+    editFormPrd.addEventListener('submit', (el) => {
       el.preventDefault();
       $.ajax({
-          url: urlProduct,
-          type: 'POST',
+          url: `${urlProduct}/${idPrd}`,
+          type: 'PATCH',
           data: {
-            name: addFormPrd.name.value,
-            category_id: addFormPrd.category_id.value,
-            price: addFormPrd.price.value,
-            discount: addFormPrd.discount.value,
-            desc: CKEDITOR.instances['Description'].getData(),
-            image: addFormPrd.image.files[0].name,
+            name: editFormPrd.name.value,
+            category_id: editFormPrd.category_id.value,
+            brand_id: editFormPrd.brand_id.value,
+            price: editFormPrd.price.value,
+            discount: editFormPrd.discount.value,
+            desc: CKEDITOR.instances['DescUpdate'].getData(),
+            image: editFormPrd.image.files[0].name,
           },
         })
         .done((data) => {
-          renderProduct(data);
-          addFormPrd.reset();
+          editFormPrd.reset();
           $('.img-box').addClass('d-none');
-          CKEDITOR.instances['Description'].setData('');
-          $("#add-product").modal('hide');
+          CKEDITOR.instances['DescUpdate'].setData('');
+          $("#edit-product").modal('hide');
+          location.reload();
         })
         .fail(() => console.log("error"))
         .always(() => console.log("complete"));
     })
-    // edit product
-  editFormPrd.addEventListener('submit', (el) => {
-    el.preventDefault();
-    $.ajax({
-        url: `${urlProduct}/${idPrd}`,
-        type: 'PATCH',
-        data: {
-          name: editFormPrd.name.value,
-          category_id: editFormPrd.category_id.value,
-          price: editFormPrd.price.value,
-          discount: editFormPrd.discount.value,
-          desc: CKEDITOR.instances['DescUpdate'].getData(),
-          image: editFormPrd.image.files[0].name,
-        },
-      })
-      .done((data) => {
-        editFormPrd.reset();
-        $('.img-box').addClass('d-none');
-        CKEDITOR.instances['DescUpdate'].setData('');
-        $("#edit-product").modal('hide');
-        location.reload();
-      })
-      .fail(() => console.log("error"))
-      .always(() => console.log("complete"));
-  })
+  }
 
-  // load list category
-  $.get(urlCate, (data) => {
-    let str = '';
-    data.forEach(cate => {
-      str += `<option value="${cate.id}">${cate.name}</option>`
-    })
-    $('.category-id').append(str);
-  });
+  
 
   // Insert image
   $(".js-image-item").on('change', function() {

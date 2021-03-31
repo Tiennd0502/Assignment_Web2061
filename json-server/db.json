@@ -1,33 +1,224 @@
 {
   "categories": [
     {
-      "id": 2,
-      "name": "Thể Thao",
-      "slug": "The-thao"
+      "name": "Bộ sưu tập",
+      "slug": "Bo-suu-tap",
+      "image": "ico_1.jpg",
+      "id": 1
+    },
+    {
+      "name": "Cao gót",
+      "slug": "Cao-got",
+      "image": "ico_3.jpg",
+      "id": 2
+    },
+    {
+      "name": "Thể thao",
+      "slug": "The-thao",
+      "image": "ico_4.jpg",
+      "id": 3
+    },
+    {
+      "name": "Boots",
+      "slug": "Boots",
+      "image": "ico_2.jpg",
+      "id": 4
+    },
+    {
+      "name": "Đế gỗ",
+      "slug": "de-go",
+      "image": "ico_5.jpg",
+      "id": 5
+    },
+    {
+      "name": "Đế bệt",
+      "slug": "de-bet",
+      "image": "ico_6.jpg",
+      "id": 6
     },
     {
       "name": "Giày búp bê",
       "slug": "Giay-bup-be",
       "image": "ico_7.jpg",
-      "id": 3
+      "id": 7
+    },
+    {
+      "name": "Sneaker",
+      "slug": "Sneaker",
+      "image": "ico_8.jpg",
+      "id": 8
     }
   ],
   "brands": [
     {
-      "id": 1,
-      "category_id": 1,
-      "image": "imag.jpg"
+      "name": "Nitesh",
+      "image": "img_brand_2.png",
+      "id": 1
+    },
+    {
+      "name": "Converse",
+      "image": "img_brand_1.png",
+      "id": 2
+    },
+    {
+      "name": "Azzahra",
+      "image": "img_brand_3.png",
+      "id": 3
+    },
+    {
+      "name": "Hollister",
+      "image": "img_brand_4.png",
+      "id": 4
+    },
+    {
+      "name": "Dolce&Gabbana",
+      "image": "img_brand_5.png",
+      "id": 5
+    },
+    {
+      "name": "Mintu Shop",
+      "image": "logo.jpg",
+      "id": 6
     }
   ],
   "products": [
     {
-      "id": 1,
-      "category": 1,
-      "brand_id": 1,
-      "name": "giay a",
+      "name": "Giày thể thao Just Do It nam nữ loại đẹp",
+      "category": "1",
+      "brand_id": "1",
       "price": "980000",
       "discount": 0,
-      "desc": "helllo desc"
+      "desc": "helllo desc",
+      "image": "1aeccbab979c6d695c3221cda52190-1-300x300.png",
+      "id": 1
+    },
+    {
+      "name": "Giày Thể Thao Nam Biti’s Hunter Core – Midnight Black Inverted DSMH01203DEN (Đen)",
+      "category": "3",
+      "brand_id": "2",
+      "price": "980000",
+      "discount": 0,
+      "desc": "helllo desc",
+      "image": "01203den__2__4874a402f0014be98dd8370b84d63fa6_1024x1024-300x300.jpg",
+      "id": 2
+    },
+    {
+      "name": "Giày Thể Thao Nam Biti’s Hunter X Liteknit DSMH02201REU (Rêu)",
+      "category_id": "2",
+      "brand_id": "2",
+      "price": "898998",
+      "discount": "0",
+      "desc": "<p>Gi&agrave;y Thể Thao Nam Biti&rsquo;s Hunter X Liteknit DSMH02201REU (R&ecirc;u)</p>\n",
+      "image": "Giày-Thể-Thao-Nam-Bitis-Hunter-X-Liteknit-DSMH02201XNH-Xanh-Nhớt-300x300.jpg",
+      "id": 3
+    },
+    {
+      "name": "Adidas Valstripes 2 ADV “Black/White Stripes” Nữ",
+      "category_id": "8",
+      "brand_id": "5",
+      "price": "790000",
+      "discount": "0",
+      "desc": "<p>Adidas Valstripes 2 ADV &ldquo;Black/White Stripes&rdquo; Nữ</p>\n",
+      "image": "zz-F99254-01-600x600-300x300.jpg",
+      "id": 4
+    },
+    {
+      "name": "Giày thể thao Just Do It nam nữ loại đẹp",
+      "category": "2",
+      "brand_id": "3",
+      "price": "980000",
+      "discount": "0",
+      "desc": "helllo desc",
+      "image": "1aeccbab979c6d695c3221cda52190-1-300x300.png",
+      "id": 5
+    },
+    {
+      "name": "Giày Thể Thao Nam Biti’s Hunter Core – Midnight Black Inverted DSMH01203DEN (Đen)",
+      "category": "4",
+      "brand_id": "4",
+      "price": "980000",
+      "discount": "0",
+      "desc": "helllo desc",
+      "image": "01203den__2__4874a402f0014be98dd8370b84d63fa6_1024x1024-300x300.jpg",
+      "id": 6
+    },
+    {
+      "name": "Giày Thể Thao Nam Biti’s Hunter X Liteknit DSMH02201REU (Rêu)",
+      "category_id": "3",
+      "brand_id": "4",
+      "price": "898998",
+      "discount": "0",
+      "desc": "<p>Gi&agrave;y Thể Thao Nam Biti&rsquo;s Hunter X Liteknit DSMH02201REU (R&ecirc;u)</p>\n",
+      "image": "Giày-Thể-Thao-Nam-Bitis-Hunter-X-Liteknit-DSMH02201XNH-Xanh-Nhớt-300x300.jpg",
+      "id": 7
+    },
+    {
+      "name": "Adidas Valstripes 2 ADV “Black/White Stripes” Nữ",
+      "category_id": "4",
+      "brand_id": "5",
+      "price": "790000",
+      "discount": "0",
+      "desc": "<p>Adidas Valstripes 2 ADV &ldquo;Black/White Stripes&rdquo; Nữ</p>\n",
+      "image": "zz-F99254-01-600x600-300x300.jpg",
+      "id": 8
+    },
+    {
+      "name": "Giày thể thao Just Do It nam nữ loại đẹp",
+      "category": "5",
+      "brand_id": "6",
+      "price": "980000",
+      "discount": "0",
+      "desc": "desc",
+      "image": "1aeccbab979c6d695c3221cda52190-1-300x300.png",
+      "id": 9
+    },
+    {
+      "name": "Giày Thể Thao Nam Biti’s Hunter Core – Midnight Black Inverted DSMH01203DEN (Đen)",
+      "category": "6",
+      "brand_id": "6",
+      "price": "980000",
+      "discount": "0",
+      "desc": "desc",
+      "image": "01203den__2__4874a402f0014be98dd8370b84d63fa6_1024x1024-300x300.jpg",
+      "id": 10
+    },
+    {
+      "name": "Giày Thể Thao Nam Biti’s Hunter X Liteknit DSMH02201REU (Rêu)",
+      "category_id": "7",
+      "brand_id": "4",
+      "price": "898998",
+      "discount": "0",
+      "desc": "<p>Gi&agrave;y Thể Thao Nam Biti&rsquo;s Hunter X Liteknit DSMH02201REU (R&ecirc;u)</p>\n",
+      "image": "Giày-Thể-Thao-Nam-Bitis-Hunter-X-Liteknit-DSMH02201XNH-Xanh-Nhớt-300x300.jpg",
+      "id": 11
+    },
+    {
+      "name": "Adidas Valstripes 2 ADV “Black/White Stripes” Nữ",
+      "category_id": "8",
+      "brand_id": "5",
+      "price": "680000",
+      "discount": "0",
+      "desc": "<p>Adidas Valstripes 2 ADV &ldquo;Black/White Stripes&rdquo; Nữ</p>\n",
+      "image": "zz-F99254-01-600x600-300x300.jpg",
+      "id": 12
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "name": "Tien",
+      "address": "Da Nang",
+      "phone": "0979081574",
+      "created_at": "31-03-2021"
+    }
+  ],
+  "order_details": [
+    {
+      "id": 1,
+      "product_id": 1,
+      "price": "980000",
+      "discount": 0,
+      "amount": 3
     }
   ]
 }
