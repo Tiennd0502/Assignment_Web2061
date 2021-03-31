@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shoe shop</title>
+	<link rel="shortcut icon" href="public/images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="public/css/app.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="public/fonts/fontawesome-pro-5.14.0-web/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="public/css/sb-admin.css">
+</head>
+<body>
+	<!-- Begin page -->
+	<div id="wrapper">
+		<!-- Topbar Start -->
+		<div class="navbar-custom">
+			<ul class="list-unstyled topnav-menu float-right mb-0">
+				<li class="dropdown notification-list dropdown d-none d-lg-inline-block ml-2">
+					<a class="nav-link dropdown-toggle mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+						<img src="public/images/flags/us.jpg" alt="lang-image" height="12">
+					</a>
+					<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+						<!-- item-->
+						<a href="javascript:void(0);" class="dropdown-item notify-item">
+							<img src="public/images/flags/germany.jpg" alt="lang-image" class="mr-1" height="12"> <span
+							class="align-middle">German</span>
+						</a>
+
+						<!-- item-->
+						<a href="javascript:void(0);" class="dropdown-item notify-item">
+							<img src="public/images/flags/italy.jpg" alt="lang-image" class="mr-1" height="12"> <span
+							class="align-middle">Italian</span>
+						</a>
+
+						<!-- item-->
+						<a href="javascript:void(0);" class="dropdown-item notify-item">
+							<img src="public/images/flags/spain.jpg" alt="lang-image" class="mr-1" height="12"> <span
+							class="align-middle">Spanish</span>
+						</a>
+
+						<!-- item-->
+						<a href="javascript:void(0);" class="dropdown-item notify-item">
+							<img src="public/images/flags/russia.jpg" alt="lang-image" class="mr-1" height="12"> <span
+							class="align-middle">Russian</span>
+						</a>
+
+					</div>
+				</li>
+
+				<li class="dropdown notification-list">
+					<a class="nav-link dropdown-toggle  waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+						<i class="far fa-bell noti-icon"></i> 
+						<span class="badge badge-pink rounded-circle noti-icon-badge">4</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-lg">
+						<div class="dropdown-header noti-title">
+							<h5 class="text-overflow m-0"><span class="float-right">
+								<span class="badge badge-danger float-right">5</span>
+							</span>Notification</h5>
+						</div>
+						<div class="slimscroll noti-scroll">
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-success"><i class="mdi mdi-comment-account-outline"></i></div>
+								<p class="notify-details">Robert S. Taylor commented on Admin<small class="text-muted">1 min ago</small></p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-primary">
+									<i class="mdi mdi-settings-outline"></i>
+								</div>
+								<p class="notify-details">New settings
+									<small class="text-muted">There are new settings available</small>
+								</p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-warning">
+									<i class="mdi mdi-bell-outline"></i>
+								</div>
+								<p class="notify-details">Updates
+									<small class="text-muted">There are 2 new updates available</small>
+								</p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon">
+									<img src="public/images/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+									<p class="notify-details">Karen Robinson</p>
+									<p class="text-muted mb-0 user-msg">
+										<small>Wow ! this admin looks good and awesome design</small>
+									</p>
+								</a>
+								<!-- item-->
+								<a href="javascript:void(0);" class="dropdown-item notify-item">
+									<div class="notify-icon bg-danger">
+										<i class="mdi mdi-account-plus"></i>
+									</div>
+									<p class="notify-details">New user
+										<small class="text-muted">You have 10 unread messages</small>
+									</p>
+								</a>
+								<!-- item-->
+								<a href="javascript:void(0);" class="dropdown-item notify-item">
+									<div class="notify-icon bg-info">
+										<i class="mdi mdi-comment-account-outline"></i>
+									</div>
+									<p class="notify-details">Caleb Flakelar commented on Admin
+										<small class="text-muted">4 days ago</small>
+									</p>
+								</a>
+								<!-- item-->
+								<a href="javascript:void(0);" class="dropdown-item notify-item">
+									<div class="notify-icon bg-secondary">
+										<i class="mdi mdi-heart"></i>
+									</div>
+									<p class="notify-details">Carlos Crouch liked
+										<b>Admin</b>
+										<small class="text-muted">13 days ago</small>
+									</p>
+								</a>
+							</div>
+							<!-- All-->
+							<a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+								View all
+								<i class="fi-arrow-right"></i>
+							</a>
+						</div>
+					</li>
+
+					<li class="dropdown notification-list">
+						<a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+							<img src="public/images/avatar-1.jpg" alt="user-image" class="rounded-circle">
+							<span class="pro-user-name ml-1">
+								Admin  <i class="far fa-angle-down"></i>
+							</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+							<!-- item-->
+							<div class="dropdown-header noti-title">
+								<h6 class="text-overflow m-0">Xin chào !</h6>
+							</div>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<i class="far fa-user"></i>
+								<span>Hồ sơ</span>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<i class="far fa-cog"></i>
+								<span>Cài đặt</span>
+							</a>
+
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<i class="far fa-lock"></i>
+								<span>Đổi mật khẩu</span>
+							</a>
+
+							<div class="dropdown-divider"></div>
+							<!-- item-->
+							<a href="Admin" class="dropdown-item notify-item" id="logout">
+								<i class="fal fa-sign-out-alt"></i>
+								<span>Đăng xuất</span>
+							</a>
+						</div>
+					</li>
+
+					<li class="dropdown notification-list">
+						<a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
+							<i class="far fa-cog noti-icon"></i>
+						</a>
+					</li>
+				</ul>
+				<!-- LOGO -->
+				<div class="logo-box">
+					<a href="index.html" class="logo text-center">
+						<span class="logo-lg">
+							<img src="public/images/white_logo.png" alt="" height="auto" width="150">
+							<!-- <span class="logo-lg-text-light">UBold</span> -->
+						</span>
+						<span class="logo-sm">
+							<!-- <span class="logo-sm-text-dark">U</span> -->
+							<img src="public/images/white_logo.png" alt="" height="28">
+						</span>
+					</a>
+				</div>
+
+				<ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+					<li>
+						<button class="button-menu-mobile waves-effect waves-light">
+							<i class="fas fa-bars"></i>
+						</button>
+					</li>
+
+					<li class="d-none d-sm-block">
+						<form class="app-search">
+							<div class="app-search-box">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Tìm kiếm...">
+									<div class="input-group-append">
+										<button class="btn" type="submit">
+											<i class="fal fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</li>
+
+				</ul>
+			</div>
+			<!-- end Topbar -->
+			<!-- ========== Left Sidebar Start ========== -->
+			<div class="left-side-menu">
+				<div class="slimscroll-menu">
+					<!--- Sidemenu -->
+					<div id="sidebar-menu">
+						<ul class="metismenu" id="side-menu">
+							<li class="menu-title">Navigation</li>
+							<li>
+								<a href="category.html"><i class="fas fa-tasks"></i>
+									<span>  Loại hàng </span>
+								</a>
+							</li>
+							<li>
+								<a href="brand.html">
+									<i class="fas fa-trademark"></i>
+									<span> Thương hiệu</span>
+								</a>
+							</li>
+							<li>
+								<a href="product.html">
+									<i class="fas fa-sitemap"></i>
+									<span> Hàng hóa</span>
+								</a>
+							</li>
+							<li>
+								<a href="Custumer">
+									<i class="fas fa-users"></i>
+									<span> Khách hàng</span>
+								</a>
+							</li>
+							<li>
+								<a href="Evaluate">
+									<i class="fas fa-comments-alt"></i>
+									<span> Đánh giá</span>
+								</a>
+							</li>
+							<li>
+								<a href="Order">
+									<i class="fas fa-ballot-check"></i>
+									<span> Đơn hàng</span>
+								</a>
+							</li>
+							<li>
+								<a href="Decentralization">
+									<i class="fas fa-users-cog"></i>
+									<span> Phân quyền</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!-- End Sidebar -->
+					<div class="clearfix"></div>
+				</div>
+				<!-- Sidebar -left -->
+			</div>
+			<!-- Left Sidebar End -->
+			<!--========================= -->
+			<!-- Start Page Content here -->
+			<!-- ========================================== -->
+			<div class="content-page">
+				<div class="content">
+					<!-- Start Content-->
+					<div class="container-fluid">
+						<!-- start page title -->
+						<div class="row">
+							<div class="col-12">
+								<div class="page-title-box">
+									<div class="page-title-right">
+										<ol class="breadcrumb m-0">
+											<li class="breadcrumb-item"><a href="javascript: void(0);">Adminox</a></li>
+											<li class="breadcrumb-item"><a href="javascript: void(0);">&rsaquo; Dashboard</a></li>
+											<li class="breadcrumb-item active">&rsaquo; Dashboard 1</li>
+										</ol>
+									</div>
+									<h4 class="page-title">Dashboard</h4>
+								</div>
+							</div>
+						</div> 
+						<div class="row mb-2">
+							<div class="col-10">
+								<form class="form-inline">
+									<input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm danh mục" aria-label="Search" style="width: 25%">
+									<button class="btn btn-dark my-2 my-sm-0" type="submit"><i class="far fa-search"></i></button>
+								</form>
+							</div>
+							<div class="col-md-2 text-right">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCate">
+									Thêm danh mục
+								</button>
+							</div>
+						</div>
+						<!-- Modal add cate -->
+						<div class="modal fade" id="addCate" tabindex="-1" aria-labelledby="addCateLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="addCateLabel">Thêm danh mục</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form class="form-add-category">
+											<div class="form-group">
+												<label for="name">Tên danh mục</label>
+												<input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên danh mục...">
+											</div>
+											<div class="form-group">
+												<label for="slug">Tên không dấu</label>
+												<input type="text" readonly="" name="slug" class="form-control" id="slug">
+											</div>
+											<div class="form-group">
+												<div class="form-upload" id="image">
+													<label class="insert-attach" for="image-item"><i class="fas fa-camera-retro mr-2"></i> Ảnh đại diện</label>
+												</div>
+												<div class="list-attach">
+													<ul class="attach-view" id="attach-view-image">
+														<li class="img-box d-none">
+															<input type="file" id="image-item" value="" name="image" class="form-control js-image-item d-none">
+															<span class="icon-close" ><i class="fas fa-times-circle"></i></span>
+															<img src="" class="delete_img">
+														</li>
+														<li class="" id="insert-attach-image">
+															<label class="insert-attach" for="image-item"><i class="fas fa-plus"></i></label>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<button type="submit" class="btn btn-primary">Thêm</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Modal edit cate -->
+						<div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="edit-categoryLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="editCateLabel">Sửa danh mục</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form class="form-edit-category">
+											<div class="form-group">
+												<label for="name">Tên danh mục</label>
+												<input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên danh mục...">
+											</div>
+											<div class="form-group">
+												<label for="slug">Tên không dấu</label>
+												<input type="text" readonly="" name="slug" class="form-control" id="slug">
+											</div>
+											<div class="form-group">
+												<div class="form-upload" id="image">
+													<label class="insert-attach" for="image-item"><i class="fas fa-camera-retro mr-2"></i> Ảnh đại diện</label>
+												</div>
+												<div class="list-attach">
+													<ul class="attach-view" id="attach-view-image">
+														<li class="img-box d-none">
+															<input type="file" id="image-item" value="" name="image" class="form-control js-image-item d-none">
+															<span class="icon-close" ><i class="fas fa-times-circle"></i></span>
+															<img src="" class="delete_img">
+														</li>
+														<li class="" id="insert-attach-image">
+															<label class="insert-attach" for="image-item"><i class="fas fa-plus"></i></label>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<button type="submit" class="btn btn-primary">Thêm</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Danh sách danh mục -->
+						<form action="" method="POST">
+							<div class="table-responsive mt-4">
+								<table class="table table-hover">
+									<thead class="text-left text-uppercase">
+										<tr>
+											<th><input type="checkbox" name=""></th>
+											<th>Id</th>
+											<th>Hình ảnh</th>
+											<th>Tên có dấu</th>
+											<th>Tên không dấu</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="list-cate">
+										
+									</tbody>
+								</table>
+							</div>
+						</form>
+					</div> <!-- end container-fluid -->
+				</div>
+				<!-- end content -->
+				<!-- Footer Start -->
+				<footer class="footer">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								2017 - 2019 &copy; Adminox theme by <a href="">Coderthemes</a>
+							</div>
+						</div>
+					</div>
+				</footer>
+				<!-- end Footer -->
+			</div>
+			<!-- =============================== -->
+			<!-- End Page content -->
+			<!-- ============================== -->
+		</div>
+		<!-- END wrapper -->
+
+		<!-- Right Sidebar -->
+		<div class="right-bar">
+			<div class="rightbar-title">
+				<a href="javascript:void(0);" class="right-bar-toggle float-right">
+					<i class="mdi mdi-close"></i>
+				</a>
+				<h4 class="font-16 m-0 text-white">Theme Customizer</h4>
+			</div>
+			<div class="slimscroll-menu">
+
+				<div class="p-3">
+					<div class="alert alert-warning" role="alert">
+						<strong>Customize </strong> the overall color scheme, layout, etc.
+					</div>
+					<div class="mb-2">
+						<img src="assets/images/layouts/light.png" class="img-fluid img-thumbnail" alt="">
+					</div>
+					<div class="custom-control custom-switch mb-3">
+						<input type="checkbox" class="custom-control-input theme-choice" id="light-mode-switch" checked />
+						<label class="custom-control-label" for="light-mode-switch">Light Mode</label>
+					</div>
+
+					<div class="mb-2">
+						<img src="assets/images/layouts/dark.png" class="img-fluid img-thumbnail" alt="">
+					</div>
+					<div class="custom-control custom-switch mb-3">
+						<input type="checkbox" class="custom-control-input theme-choice" id="dark-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css" 
+						data-appStyle="assets/css/app-dark.min.css" />
+						<label class="custom-control-label" for="dark-mode-switch">Dark Mode</label>
+					</div>
+
+					<div class="mb-2">
+						<img src="assets/images/layouts/rtl.png" class="img-fluid img-thumbnail" alt="">
+					</div>
+					<div class="custom-control custom-switch mb-3">
+						<input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="assets/css/app-rtl.min.css" />
+						<label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
+					</div>
+
+					<div class="mb-2">
+						<img src="assets/images/layouts/dark-rtl.png" class="img-fluid img-thumbnail" alt="">
+					</div>
+					<div class="custom-control custom-switch mb-5">
+						<input type="checkbox" class="custom-control-input theme-choice" id="dark-rtl-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css" 
+						data-appStyle="assets/css/app-dark-rtl.min.css" />
+						<label class="custom-control-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+					</div>
+
+					<a href="https://1.envato.market/y2YAD" class="btn btn-danger btn-block mt-3" target="_blank"><i class="mdi mdi-download mr-1"></i> Download Now</a>
+				</div>
+			</div> <!-- end slimscroll-menu-->
+		</div>
+		<!-- /Right-bar -->
+
+		<!-- Right bar overlay-->
+		<div class="rightbar-overlay"></div>
+		<a href="javascript:void(0);" class="right-bar-toggle demos-show-btn">
+			<i class="mdi mdi-settings-outline mdi-spin"></i> &nbsp;Choose Demos
+		</a>
+
+		<!-- Vendor js -->
+		<script src="public/javascripts/vendor.min.js"></script>
+
+		<!--C3 Chart-->
+		<script src="public/library/d3/d3.min.js"></script>
+		<script src="public/library/c3/c3.min.js"></script>
+
+		<script src="public/library/echarts/echarts.min.js"></script>
+
+		<script src="public/javascripts/pages/dashboard.init.js"></script>
+		<!-- App js -->
+		<script src="public/javascripts/app.js"></script>
+
+		<!-- jQuery -->
+		<script type="text/javascript" src="public/javascripts/jquery-3.5.0.min.js"></script> 
+
+		<script src="public/javascripts/admin.js"></script>
+
+	</body>
+	</html>

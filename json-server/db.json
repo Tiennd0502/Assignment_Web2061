@@ -1,0 +1,33 @@
+{
+  "categories": [
+    {
+      "id": 2,
+      "name": "Thể Thao",
+      "slug": "The-thao"
+    },
+    {
+      "name": "Giày búp bê",
+      "slug": "Giay-bup-be",
+      "image": "ico_7.jpg",
+      "id": 3
+    }
+  ],
+  "brands": [
+    {
+      "id": 1,
+      "category_id": 1,
+      "image": "imag.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "category": 1,
+      "brand_id": 1,
+      "name": "giay a",
+      "price": "980000",
+      "discount": 0,
+      "desc": "helllo desc"
+    }
+  ]
+}
