@@ -9,8 +9,8 @@ $(function() {
       let txtCate = "";
       let listCate = "";
       data.forEach(cate => {
-        txtCate += `<li><a class="dropdown-item" href="#">${cate.name}</a></li>`;
-        listCate += `<div class="category text-center">
+        txtCate += `<a class="dropdown-item" href="#">${cate.name}</a>`;
+        listCate += `<div class="section-category-item text-center">
 				<a href="">
 					<img src="./public/images/categories/${cate.image}" alt="">
 					<h4>${cate.name}</h4>
@@ -35,12 +35,12 @@ $(function() {
   });
   $("#home-carousel").mouseenter(function() {
     $("#home-carousel .owl-nav > *").fadeIn();
-    $("#home-carousel .owl-nav .owl-next i").animate({ marginRight: '30px' });
-    $("#home-carousel .owl-nav .owl-prev i").animate({ marginLeft: '30px' });
+    $("#home-carousel .owl-nav .owl-next i").animate({ marginRight: '10px' });
+    $("#home-carousel .owl-nav .owl-prev i").animate({ marginLeft: '10px' });
   }).mouseleave(function() {
     $("#home-carousel .owl-nav > *").fadeOut();
-    $("#home-carousel .owl-nav .owl-next i").animate({ marginRight: '50px' });
-    $("#home-carousel .owl-nav .owl-prev i").animate({ marginLeft: '50px' });
+    $("#home-carousel .owl-nav .owl-next i").animate({ marginRight: '30px' });
+    $("#home-carousel .owl-nav .owl-prev i").animate({ marginLeft: '30px' });
   })
 
 
