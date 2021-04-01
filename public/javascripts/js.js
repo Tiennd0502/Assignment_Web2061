@@ -29,8 +29,8 @@ $(function() {
     dots: true,
     loop: true,
     autoplayHoverPause: true,
-    autoplay: true,
-    autoplayTimeout: 3000,
+    // autoplay: true,
+    // autoplayTimeout: 3000,
     responsiveRefreshRate: 100,
   });
   $("#home-carousel").mouseenter(function() {
@@ -154,13 +154,13 @@ $(function() {
     }
   }
   //  load  sản phẩm
-  fetch(urlPrd, { method: 'GET' })
+  fetch(`${urlPrd}?_limit=8`, { method: 'GET' })
     .then(res => res.json())
     .then(data => {
       let txtPrd = "";
       let txtCarousel = `<div class="owl-carousel owl-theme" id="js-carousel-prd">`;
       data.forEach(product => {
-        txtPrd += `<div class="prd-item col-lg-3 col-md-4 col-sm-4  col-xs-6 col-6 mt-3">
+        txtPrd += `<div class="prd-item col-20 col-lg-3 col-md-4 col-sm-4  col-xs-6 col-6 mt-3">
                     <a href="" class="d-block m-0 p-0 text-center">
                       <figure class="prd-img">
                         <img class="lazyload full zoom" data-src="./public/images/products/${product.image}" alt="" loading="lazy" height="300" width="300" >
@@ -191,7 +191,7 @@ $(function() {
       });
       txtCarousel += `</div>`;
       $("#js-prd-hot").html(txtPrd);
-      $("#js-new-prd").html(txtPrd);
+      $("#js-prd-new").html(txtPrd);
       $("#prd-cate").html(txtCarousel);
       // carousel product cate detail
       $("#js-carousel-prd").owlCarousel({

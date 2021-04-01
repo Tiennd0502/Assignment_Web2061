@@ -12,7 +12,7 @@ $White: #fff;
   flex-wrap: $wrap;
 }
 
-@mixin textoverflow ($line:2) {
+@mixin textOverflow ($line:2) {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: $line;
@@ -101,6 +101,11 @@ body {
 }
 
 .owl-carousel.owl-theme {
+  .item {
+    figure {
+      width: 100%;
+    }
+  }
   .owl-nav {
     display: flex;
     justify-content: space-between;
@@ -189,3 +194,110 @@ body {
     }
   }
 }
+
+// product hot
+.title {
+  h2 {
+    font-size: 32px;
+    margin: auto;
+    span:hover {
+      color: $Red;
+    }
+  }
+  small {
+    font-size: 14px;
+  }
+  .text-muted {
+    color: #666666;
+  }
+}
+
+.prd-item {
+  a {
+    .prd-img {
+      position: relative;
+      margin: 0;
+      overflow: hidden;
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        transform: scale(1);
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transition: 0.3s ease-in-out;
+        -webkit-transition: 0.3s ease-in-out;
+        -moz-transition: 0.3s ease-in-out;
+        -ms-transition: 0.3s ease-in-out;
+        -o-transition: 0.3s ease-in-out;
+      }
+      i {
+        opacity: 0;
+        font-size: 25px;
+        position: absolute;
+        left: 5%;
+        bottom: 5%;
+        color: $TextColor;
+        &:hover {
+          color: $Red;
+        }
+      }
+    }
+    .prd-name {
+      h5 {
+        font-weight: 500;
+        @include textOverflow(2);
+      }
+    }
+    .prd-price {
+      color: $Red;
+    }
+  }
+  &:hover {
+    .prd-img {
+      i {
+        opacity: 1;
+      }
+      img {
+        transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+      }
+    }
+  }
+}
+
+.post {
+  &-item {
+    figcaption {
+      h5 {
+        font-size: 16px;
+      }
+      time {
+        opacity: 0.8;
+        font-size: 12px;
+      }
+      p {
+        @include textOverflow(3);
+      }
+    }
+  }
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+  
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {}

@@ -1,6 +1,5 @@
 {
-  "categories": [
-    {
+  "categories": [{
       "name": "Bộ sưu tập",
       "slug": "Bo-suu-tap",
       "image": "ico_1.jpg",
@@ -49,8 +48,7 @@
       "id": 8
     }
   ],
-  "brands": [
-    {
+  "brands": [{
       "name": "Nitesh",
       "image": "img_brand_2.png",
       "id": 1
@@ -81,8 +79,7 @@
       "id": 6
     }
   ],
-  "products": [
-    {
+  "products": [{
       "name": "Giày thể thao Just Do It nam nữ loại đẹp",
       "category": "1",
       "brand_id": "1",
@@ -113,16 +110,6 @@
       "id": 3
     },
     {
-      "name": "Adidas Valstripes 2 ADV “Black/White Stripes” Nữ",
-      "category_id": "8",
-      "brand_id": "5",
-      "price": "790000",
-      "discount": "0",
-      "desc": "<p>Adidas Valstripes 2 ADV &ldquo;Black/White Stripes&rdquo; Nữ</p>\n",
-      "image": "zz-F99254-01-600x600-300x300.jpg",
-      "id": 4
-    },
-    {
       "name": "Giày thể thao Just Do It nam nữ loại đẹp",
       "category": "2",
       "brand_id": "3",
@@ -130,7 +117,7 @@
       "discount": "0",
       "desc": "helllo desc",
       "image": "1aeccbab979c6d695c3221cda52190-1-300x300.png",
-      "id": 5
+      "id": 4
     },
     {
       "name": "Giày Thể Thao Nam Biti’s Hunter Core – Midnight Black Inverted DSMH01203DEN (Đen)",
@@ -140,7 +127,7 @@
       "discount": "0",
       "desc": "helllo desc",
       "image": "01203den__2__4874a402f0014be98dd8370b84d63fa6_1024x1024-300x300.jpg",
-      "id": 6
+      "id": 5
     },
     {
       "name": "Giày Thể Thao Nam Biti’s Hunter X Liteknit DSMH02201REU (Rêu)",
@@ -150,6 +137,16 @@
       "discount": "0",
       "desc": "<p>Gi&agrave;y Thể Thao Nam Biti&rsquo;s Hunter X Liteknit DSMH02201REU (R&ecirc;u)</p>\n",
       "image": "Giày-Thể-Thao-Nam-Bitis-Hunter-X-Liteknit-DSMH02201XNH-Xanh-Nhớt-300x300.jpg",
+      "id": 6
+    },
+    {
+      "name": "Adidas Valstripes 2 ADV “Black/White Stripes” Nữ",
+      "category_id": "8",
+      "brand_id": "5",
+      "price": "790000",
+      "discount": "0",
+      "desc": "<p>Adidas Valstripes 2 ADV &ldquo;Black/White Stripes&rdquo; Nữ</p>\n",
+      "image": "zz-F99254-01-600x600-300x300.jpg",
       "id": 7
     },
     {
@@ -203,22 +200,18 @@
       "id": 12
     }
   ],
-  "orders": [
-    {
-      "id": 1,
-      "name": "Tien",
-      "address": "Da Nang",
-      "phone": "0979081574",
-      "created_at": "31-03-2021"
-    }
-  ],
-  "order_details": [
-    {
-      "id": 1,
-      "product_id": 1,
-      "price": "980000",
-      "discount": 0,
-      "amount": 3
-    }
-  ]
+  "orders": [{
+    "id": 1,
+    "name": "Tien",
+    "address": "Da Nang",
+    "phone": "0979081574",
+    "created_at": "31-03-2021"
+  }],
+  "order_details": [{
+    "id": 1,
+    "product_id": 1,
+    "price": "980000",
+    "discount": 0,
+    "amount": 3
+  }]
 }
