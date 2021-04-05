@@ -2,7 +2,9 @@ $(function() {
   // Product
   const urlCate = 'http://localhost:3000/categories';
   const urlBrand = 'http://localhost:3000/brands';
-  const urlProduct = ' http://localhost:3000/products';
+  const urlProduct = 'http://localhost:3000/products';
+  const urlProductImg = 'http://localhost:3000/product_images';
+
   // load list category
   $.get(urlCate, (data) => {
     let str = '';
@@ -12,20 +14,20 @@ $(function() {
     $('.category-id').append(str);
   });
   //  load list brand
-   $.get(urlBrand, (data) => {
+  $.get(urlBrand, (data) => {
     let str = '';
     data.forEach(brand => {
       str += `<option value="${brand.id}">${brand.name}</option>`
     })
     $('.brand-id').append(str);
   });
-   // cofig form product
+  // cofig form product
   const addFormPrd = document.querySelector('.form-add-product');
   const editFormPrd = document.querySelector('.form-edit-product');
   let idPrd;
   // Pagination 
   let _currentPage = 1;
-  let _limit = 5;
+  let _limit = 8;
   let length;
   $.get(`${urlProduct}?_page=${_currentPage}&_limit=${_limit}`, (data) => {
     data.forEach(product => {
@@ -99,7 +101,7 @@ $(function() {
     if ($(this).data('filter')) {
       $('#list-product').html('');
       let category_id = $(this).val();
-      _limit = 3;
+      _limit = 4;
       _currentPage = 1;
       let option = { "category_id": category_id };
       //  nhác viết TH category_id = ''
@@ -132,7 +134,6 @@ $(function() {
         <td><img src="public/images/products/${product.image}" alt="IMG"></td>
         <td style="max-width: 400px;">${product.name}</td>
         <td>${product.price}</td>
-        <td>${product.discount}</td>
         <td><a class="btn btn-outline-success" data-toggle="modal" data-target="#show-product"">Xem chi tiết</a></td>
         <td>
           
@@ -159,6 +160,30 @@ $(function() {
           .always(() => {
             console.log("complete");
           });
+        $.ajax({
+            url: `${urlProductImg}?product_id=${product.id}`,
+            type: 'GET',
+          }).done((data) => {
+            for (const key in data) {
+              $.ajax({
+                  url: `${urlProductImg}/${data[key].id}`,
+                  type: 'DELETE',
+                })
+                .done((data) => {})
+                .fail(() => {
+                  console.log("error");
+                })
+                .always(() => {
+                  console.log("complete");
+                });
+            }
+          })
+          .fail(() => {
+            console.log("error");
+          })
+          .always(() => {
+            console.log("complete");
+          });
       })
       // edit product
     const editPrd = document.querySelector(`[data-id='${product.id}'] .btn-edit`);
@@ -168,46 +193,88 @@ $(function() {
       editFormPrd.category_id.value = product.category_id;
       editFormPrd.brand_id.value = product.brand_id;
       editFormPrd.price.value = product.price;
-      editFormPrd.discount.value = product.discount;
       editFormPrd.category_id.value = product.category_id;
       idPrd = product.id;
       CKEDITOR.instances['DescUpdate'].setData(product.desc);
-      $('#edit-product img').attr('src', `public/images/products/${product.image}`);
-      $('#edit-product img').parent().removeClass('d-none');
-    })
+      $('#showImg').attr('src', `public/images/products/${product.image}`);
 
+      $.ajax({
+          url: `${urlProductImg}?product_id=${product.id}`,
+          type: 'GET',
+        })
+        .done((data) => {
+          let txtItem = '';
+          for (const key in data) {
+            txtItem += `<li class="img-box">
+                          <input type="hidden" name="linkLibrary[]" value="">
+                          <span class="icon-close" data-edit="${data[key].id}"><i class="fas fa-times-circle"></i></span> 
+                          <img src="public/images/products/${data[key].image}" alt="">
+                        </li>`;
+          }
+          let lengthPrev = $("#insert-attach-edit-library").prevAll().length;
+          // console.log(lengthPrev);
+          if (lengthPrev != 0) {
+            $("#insert-attach-edit-library").prevAll().remove();
+          }
+          $("#insert-attach-edit-library").before(txtItem);
+        })
+        .fail(() => {
+          console.log("error");
+        })
+        .always(() => {
+          console.log("complete");
+        });
+    })
   }
 
+
+
   //  add product
-  if(addFormPrd){
+  if (addFormPrd) {
     addFormPrd.addEventListener('submit', (el) => {
-        el.preventDefault();
-        $.ajax({
-            url: urlProduct,
-            type: 'POST',
-            data: {
-              name: addFormPrd.name.value,
-              category_id: addFormPrd.category_id.value,
-              brand_id: addFormPrd.brand_id.value,
-              price: addFormPrd.price.value,
-              discount: addFormPrd.discount.value,
-              desc: CKEDITOR.instances['Description'].getData(),
-              image: addFormPrd.image.files[0].name,
-            },
-          })
-          .done((data) => {
-            renderProduct(data);
-            addFormPrd.reset();
-            $('.img-box').addClass('d-none');
-            CKEDITOR.instances['Description'].setData('');
-            $("#add-product").modal('hide');
-          })
-          .fail(() => console.log("error"))
-          .always(() => console.log("complete"));
-      })
+      el.preventDefault();
+      $.ajax({
+          url: urlProduct,
+          type: 'POST',
+          data: {
+            name: addFormPrd.name.value,
+            category_id: addFormPrd.category_id.value,
+            brand_id: addFormPrd.brand_id.value,
+            price: addFormPrd.price.value,
+            desc: CKEDITOR.instances['Description'].getData(),
+            image: addFormPrd.image.files[0].name,
+          },
+        })
+        .done((data) => {
+          renderProduct(data);
+          let product_id = data.id;
+          let library = $('input.showImage').prop('files');
+          for (const key in library) {
+            if (!isNaN(key)) {
+              $.ajax({
+                  url: urlProductImg,
+                  type: 'POST',
+                  data: {
+                    product_id: product_id,
+                    image: library[key].name,
+                  },
+                })
+                .done((data) => {})
+                .fail(() => console.log("error"))
+                .always(() => console.log("complete"));
+            }
+          }
+          addFormPrd.reset();
+          $('.img-box').addClass('d-none');
+          CKEDITOR.instances['Description'].setData('');
+          $("#add-product").modal('hide');
+        })
+        .fail(() => console.log("error"))
+        .always(() => console.log("complete"));
+    })
   };
   // edit product
-  if(editFormPrd){
+  if (editFormPrd) {
     editFormPrd.addEventListener('submit', (el) => {
       el.preventDefault();
       $.ajax({
@@ -218,12 +285,12 @@ $(function() {
             category_id: editFormPrd.category_id.value,
             brand_id: editFormPrd.brand_id.value,
             price: editFormPrd.price.value,
-            discount: editFormPrd.discount.value,
             desc: CKEDITOR.instances['DescUpdate'].getData(),
             image: editFormPrd.image.files[0].name,
           },
         })
         .done((data) => {
+
           editFormPrd.reset();
           $('.img-box').addClass('d-none');
           CKEDITOR.instances['DescUpdate'].setData('');
@@ -232,24 +299,66 @@ $(function() {
         })
         .fail(() => console.log("error"))
         .always(() => console.log("complete"));
+      // lấy array id productImg cần xóa
+      let idDel = $("input[name='linkLibrary[]']")
+        .map(function() { return $(this).val(); }).get();
+      // thực hiện xóa img 
+      idDel.forEach((value, index) => {
+        if (value != "") {
+          $.ajax({
+              url: `${urlProductImg}/${value}`,
+              type: 'DELETE',
+            })
+            .done((data) => {})
+            .fail(() => {
+              console.log("error");
+            })
+            .always(() => {
+              console.log("complete");
+            });
+        }
+      })
+
+      // thực hiện thêm img mới
+      // check những file thêm mới nhưng lại hủy
+      // let delEdit = $("input[name='delete_edit-library[]']")
+      //   .map(function() { return $(this).val(); }).get();
+      // for (const key in delEdit) {
+      //   if (!isNaN(key)) {
+      //     console.log("key:" + key);
+      //     console.log("value:" + delEdit[key]);
+
+      //     // if (value != "") {
+
+      //     // }
+      //   }
+      // }
+      let library = $('#attach-view-edit-library input.showImage').prop('files');
+      for (const key in library) {
+
+        if (!isNaN(key)) {
+          $.ajax({
+              url: urlProductImg,
+              type: 'POST',
+              data: {
+                product_id: idPrd,
+                image: library[key].name,
+              },
+            })
+            .done((data) => {})
+            .fail(() => console.log("error"))
+            .always(() => console.log("complete"));
+        }
+      }
     })
   }
 
-  
+
 
   // Insert image
   $(".js-image-item").on('change', function() {
     if ($(this).val() != '') {
       $(this).parent().prev('li.img-box').addClass('d-none');
-      // nó thay dổi
-      // lấy data-edit truỳen cho input
-      // chi tiết
-      // let parent = $(this).parent().prev('li.img-box');
-      // let iconClose = parent.children('.icon-close');
-      // let link = iconClose.data('edit');
-      // let inputLink = parent.children('input');
-      // inputLink.val(link);
-      // console.log(inputLink.val());
       // cách ngắn nhất
       $(this).parent().prev('li.img-box').children('input').val($(this).parent().prev('li.img-box').children('.icon-close').data('edit'));
       // console.log($(this).parent().prev('li.img-box').children('input').val());
@@ -268,15 +377,24 @@ $(function() {
       $(this).parent().removeClass('d-none');
     }
   });
-  $('.icon-close').on('click', function() {
-    $(this).parent().addClass('d-none');
 
+  // ẩn img
+  // $('.icon-close').on('click', function() {
+  //   // console.log('chay vo icon close view sẳn có');
+  //   $(this).parent().addClass('d-none');
+  //   $(this).next().attr('src', '');
+  //   if ($(this).is('[data-edit]')) {
+  //     $(this).prev('input').val($(this).data('edit'))
+  //   }
+  // });
+  $(document).on('click', '.icon-close', function() {
+    $(this).parent().addClass('d-none');
     $(this).next().attr('src', '');
     if ($(this).is('[data-edit]')) {
       $(this).prev('input').val($(this).data('edit'))
     }
-    // console.log('hello');
-  });
+  })
+
   // show image
   $('.js-insert-attach').on('click', function() {
     let insertNames = $(this).data('name');
@@ -285,7 +403,7 @@ $(function() {
       let date = new Date();
       let time = date.getTime();
       let _html = '<li class="img-box d-none" id="' + insertNames + time + '">';
-      _html += '<input type="file" name="' + insertNames + '[]" multiple="multiple" class="form-control showImage d-none" data-time="' + time + '" data-name="' + insertNames + '" >';
+      _html += '<input type="file" name="' + insertNames + '" multiple="multiple" class="form-control showImage d-none" data-time="' + time + '" data-name="' + insertNames + '" >';
       _html += '<input type="hidden" name="delete_' + insertNames + '[]">';
       _html += '<span class="icon-close" data-id="' + insertNames + time + '">';
       _html += '<i class="fas fa-times-circle"></i></span>';
@@ -293,6 +411,7 @@ $(function() {
       let insertAttach = $("#insert-attach-" + insertNames);
       insertAttach.before(_html);
       $('#attach-view-' + insertNames + ' li').last().prev().find('input[type="file"]').click();
+
     } else {
       if (lasting == "") {
         $('#attach-view-' + insertNames + ' li').last().prev().find('input[type="file"]').click();
@@ -321,10 +440,9 @@ $(function() {
             }
           } else {
             let lastModified = fileSelected[key]['lastModified'];
-            let _html = '<li class="img-box " id="' + insertNames + lastModified + '">';
-            _html += '<span class="icon-close" data-key="' + key + '" data-parent="' + insertNames + time + '">';
-            _html += '<i class="fas fa-times-circle"></i></span>';
-            _html += '</li>';
+            let _html = `<li class="img-box " id="${insertNames + lastModified}">
+                          <span class="icon-close" data-key="${key}" data-parent="${insertNames + time}"><i class="fas fa-times-circle"></i></span>
+                        </li>`;
             let insertAttach = $("#insert-attach-" + insertNames);
             insertAttach.before(_html);
             let fileToLoad = fileSelected[key];
@@ -343,29 +461,34 @@ $(function() {
         }
         $(this).parent().removeClass('d-none');
       }
+      // mở rộng hủy trong file multiple
       $('.icon-close').off('click').on('click', function() {
         if ($(this).is('[data-key]') && $(this).is('[data-parent]')) {
+          console.log('xóa 1file trong nhiều file có parent co key');
+
           let key = $(this).data('key');
           let parent = $(this).data('parent');
           if ($('#' + parent).length) {
             let rootDel = $('#' + parent).children('input[type=hidden]:first');
             let rootFile = $('#' + parent).children('input[type=file]:first')[0].files;
-            console.log(rootFile);
+            // console.log(rootFile);
             if (rootDel.val() == '') {
               rootDel.val(rootFile[key].name);
             } else {
               rootDel.val(rootDel.val() + ',' + rootFile[key].name);
             }
-            $(this).parent().remove();
+            // $(this).parent().remove();
+            $(this).parent().addClass("d-none");
             let arrDeleteRoot = rootDel.val().split(',');
             if (arrDeleteRoot.length == rootFile.length) {
               console.log('hủy toàn bộ với click k file');
               $('#' + parent).remove();
             }
-            console.log(rootDel.val());
+            // console.log(rootDel.val());
           }
         } else {
           if ($(this).is('[data-id]')) {
+            console.log('xóa 1file trong nhiều file có idparend');
             let id = $(this).data('id');
             if ($('#' + id).length) {
               let checkFiles = $('#' + id + ' > input:first')[0].files;

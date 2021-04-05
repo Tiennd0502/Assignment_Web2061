@@ -1,8 +1,53 @@
 $(function() {
+  // dơn hàng page extras-invoice.html
   const urlCate = 'http://localhost:3000/categories';
+  const urlBrand = 'http://localhost:3000/brands';
   const urlPrd = 'http://localhost:3000/products';
+  const urlPrdImg = 'http://localhost:3000/product_images';
+  const FormatCurrency = (olded, discount = 0) => {
+    let old = olded;
+    let result = "";
+    let number;
+    if (discount == 0) {
+      number = old;
+    } else {
+      number = old * (100 - discount) / 100;
+    }
+    890000
+    number = number.toString(10);
+    let index = 0;
+    for (let i = number.length - 1; i >= 0; i--) {
+      if (index < 3) {
+        result += "0";
+      } else if (index == 3 || index == 6) {
+        result += "." + number[i];
+      } else {
+        result += number[i];
+      };
+      index++;
+    };
+    result = result.split("").reverse().join("");
+    // console.log(result);
+    return result;
+  }
 
-  //  load danh mục sản phẩm
+  // Lazyloading image
+  const LoadImg = () => {
+      if ('loading' in HTMLImageElement.prototype) {
+        const images = document.querySelectorAll("img.lazyload");
+        images.forEach(img => {
+          img.src = img.dataset.src;
+        });
+      } else {
+        // import Lazysize
+        let script = document.createElement("script");
+        script.async = true;
+        script.src =
+          "./public/javascripts/lazysizes.min.js";
+        document.body.appendChild(script);
+      }
+    }
+    //  load danh mục sản phẩm
   fetch(urlCate, { method: 'GET' })
     .then(res => res.json())
     .then(data => {
@@ -19,6 +64,22 @@ $(function() {
       });
       $("#js-menu-category").html(txtCate);
       $("#js-section-category").append(listCate);
+    });
+  //  load thương hiệu brand
+  fetch(urlBrand, { method: 'GET' })
+    .then(res => res.json())
+    .then(data => {
+      let txtBrand = "";
+      data.forEach(brand => {
+        txtBrand += `<div class="col-lg-2 col-md-2 section-brand-item text-center">
+        <a href="">
+          <figure class="figure">
+            <img src="./public/images/brands/${brand.image}" class="figure-img img-fluid" alt="">
+          </figure>
+        </a>
+      </div>`;
+      });
+      $("#js-section-brand").append(txtBrand);
     });
   //  carousel home
   $("#home-carousel").owlCarousel({
@@ -45,137 +106,250 @@ $(function() {
 
 
 
-  let sync1 = $("#stage-detail");
-  let sync2 = $("#dot-detail");
-  sync1.owlCarousel({
-      nav: true,
-      navText: ["<i class='far fa-chevron-left'></i>", "<i class='far fa-chevron-right'></i>"],
-      items: 1,
-      dots: false,
-      autoplayHoverPause: true,
-      // autoplay: true,
-      // autoplayTimeout: 5000,
-      rewind: true,
-      startPosition: 0,
-      responsiveRefreshRate: 200,
-    }).on('changed.owl.carousel', syncPosition)
-    .on("click", ".owl-nav", function(el) {});
 
-  $("#stage-detail").mouseenter(function() {
-    $("#stage-detail .owl-nav > *").fadeIn();
-    $("#stage-detail .owl-nav .owl-next i").animate({ marginRight: '30px' });
-    $("#stage-detail .owl-nav .owl-prev i").animate({ marginLeft: '10px' });
-  }).mouseleave(function() {
-    $("#stage-detail .owl-nav > *").fadeOut();
-    $("#stage-detail .owl-nav .owl-next i").animate({ marginRight: '50px' });
-    $("#stage-detail .owl-nav .owl-prev i").animate({ marginLeft: '30px' });
-  })
-
-  sync2.on('initialized.owl.carousel', function() {
-    sync2.find(".owl-item").eq(0).addClass("synced");
-  }).owlCarousel({
-    nav: false,
-    items: 5,
-    dots: false,
-    slideBy: 5,
-    rewind: true,
-    mouseDrag: false,
-    responsiveRefreshRate: 100,
-  }).on("click", ".owl-item", function(el) {
-    el.preventDefault();
-    var number = $(this).index();
-    sync1.data('owl.carousel').to(number, 300, true);
-
-  });
-
-  function syncPosition(el) {
-    var count = el.item.count - 1;
-    var current = el.item.index;
-
-    $("#dot-detail")
-      .find(".owl-item")
-      .removeClass("synced")
-      .eq(current)
-      .addClass("synced");
-
-    if ($("#sync2").data("owl.carousel") !== undefined) {
-      var lenghtOption = sync2.find('.owl-item').length;
-      var listObj = sync2.find('.owl-item.active');
-      var listIndex = [];
-      for (var i = 0; i < 5; i++) {
-        listIndex[i] = listObj.eq(i).index();
-      };
-      center(current, listIndex, lenghtOption);
-    }
-  }
-
-  function center(number, array, end) {
-    var found = false;
-    var num = number;
-    var listIndex = array;
-    for (var i in listIndex) {
-      if (num === listIndex[i]) {
-        var found = true;
-      }
-    }
-    if (found === false) {
-      if (num > listIndex[listIndex.length - 1]) {
-        if (num === 7) {
-          sync2.data('owl.carousel').to(end - listIndex.length, 100, true);
-        } else {
-          sync2.data('owl.carousel').to(num - listIndex.length + 2, 100, true);
-        }
-        // console.log("current out ListIndex: th1");
-      } else {
-        if (num - 1 === -1) {
-          num = 0;
-
-        }
-        sync2.data('owl.carousel').to(num, 100, true);
-        // console.log("current out ListIndex: th2");
-      }
-    } else if (num === listIndex[listIndex.length - 1]) {
-      // console.log("current == ListIndex end");
-      if (num === end - 1) {
-        sync2.data('owl.carousel').to(listIndex[1] - 1, 100, true);
-      } else {
-        sync2.data('owl.carousel').to(listIndex[1], 100, true);
-      };
-
-    } else if (num === listIndex[0]) {
-      if (num === 0) {
-        sync2.data('owl.carousel').to(0, 100, true);
-      } else {
-        sync2.data('owl.carousel').to(num - 1, 100, true);
-      };
-      // console.log("current == ListIndex star");
-    } else {
-      // console.log("k làm gì cả");
-    }
-  }
-  //  load  sản phẩm
-  fetch(`${urlPrd}?_limit=8`, { method: 'GET' })
+  // load sản phẩm giày thể thao
+  fetch(`${urlPrd}?category_id=3&_limit=8`, { method: 'GET' })
     .then(res => res.json())
     .then(data => {
       let txtPrd = "";
-      let txtCarousel = `<div class="owl-carousel owl-theme" id="js-carousel-prd">`;
       data.forEach(product => {
-        txtPrd += `<div class="prd-item col-20 col-lg-3 col-md-4 col-sm-4  col-xs-6 col-6 mt-3">
-                    <a href="" class="d-block m-0 p-0 text-center">
-                      <figure class="prd-img">
-                        <img class="lazyload full zoom" data-src="./public/images/products/${product.image}" alt="" loading="lazy" height="300" width="300" >
-                        <i class="fad fa-cart-arrow-down"></i>
-                      </figure>
-                      <div class="prd-name">
-                        <h5 class="">${product.name}</h5>
-                      </div>
-                      <div class="prd-price"">
-                        <strong>` + FormatCurrency(Number(product.price)) + ` ₫</strong>
-                      </div>
-                    </a>
-                  </div>`;
-        txtCarousel += `<div class="prd-item item">
-                          <a href="" class="d-block m-0 p-0 text-center">
+        txtPrd += `<div class="prd-item col-20 col-lg-3 col-md-4 col-sm-4  col-xs-6 col-6 mt-3" data-id="${product.id}">
+              <a href="detail.html"  class="d-block m-0 p-0 text-center">
+                <figure class="prd-img">
+                  <img class="lazyload full zoom" data-src="./public/images/products/${product.image}" alt="" loading="lazy" height="300" width="300" >
+                  <i class="fad fa-cart-arrow-down"></i>
+                </figure>
+                <div class="prd-name">
+                  <h5 class="">${product.name}</h5>
+                </div>
+                <div class="prd-price"">
+                  <strong>` + FormatCurrency(Number(product.price)) + ` ₫</strong>
+                </div>
+              </a>
+            </div>`;
+      });
+      $("#js-prd-hot").html(txtPrd);
+    });
+  // load sản phẩm giày sneaker
+  fetch(`${urlPrd}?category_id=8&_limit=8`, { method: 'GET' })
+    .then(res => res.json())
+    .then(data => {
+      let txtPrd = "";
+      data.forEach(product => {
+        txtPrd += `<div class="prd-item col-20 col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6 mt-3" data-id="${product.id}">
+            <a href="detail.html" class="d-block m-0 p-0 text-center">
+              <figure class="prd-img">
+                <img class="lazyload full zoom" data-src="./public/images/products/${product.image}" alt="" loading="lazy" height="300" width="300" >
+                <i class="fad fa-cart-arrow-down"></i>
+              </figure>
+              <div class="prd-name">
+                <h5 class="">${product.name}</h5>
+              </div>
+              <div class="prd-price"">
+                <strong>` + FormatCurrency(Number(product.price)) + ` ₫</strong>
+              </div>
+            </a>
+          </div>`;
+      });
+      $("#js-prd-new").html(txtPrd);
+    });
+
+
+  // load img detail
+  const ItemContent = (product) => {
+    return `<div class="item">
+                <a href="javascript:void(0);" class="d-block">
+                  <figure class="figure w-100">
+                    <img class="figure-img img-fluid" src="./public/images/products/${product.image}" alt="">
+                  </figure>
+                </a>
+            </div>`;
+  };
+
+  // window.localStorage.clear();
+  // Set id_sản phẩm được click xem chi tiết
+  $(document).on("click", ".prd-item", function() {
+    // let id = $(this).data("id");
+    localStorage.setItem("id_detail", $(this).data("id"));
+  });
+  const LoadCartItem = (product, quantity, TotalPayment) => {
+      let _html = `<tr class="cart-item js-cart-item" data-id="${product.id}" >
+              <td class="info-prd">
+                <i class="fal fa-times-circle"></i>
+                <figure class="figure">
+                  <img class="figure-img img-fluid" src="./public/images/products/${product.image}" alt="">
+                </figure>
+                <span>${product.name}</span>
+              </td>
+              <td>
+                <div class="prd-price text-right font-weight-bold"><strong>${FormatCurrency(Number(product.price))} </strong> ₫</div>
+              </td>
+              <td>
+                <div class="choose-number mt-2 mb-2">
+                  <input type="hidden" class="quantity" name="quantity[${product.id}]" value="${quantity}">
+                  <div class="abate js-change-quantity ${(quantity > 1)? "active": ""}" change="abate" id="abate"><i class="fal fa-minus"></i></div>
+                  <div class="number">${quantity}</div>
+                  <div class="augment js-change-quantity active" change="augment" id="augment"><i class="fal fa-plus"></i></div>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="prd-price font-weight-bold"><strong class="js-prd-price">${FormatCurrency(Number(product.price)* quantity)}</strong> ₫</div>
+              </td>
+            </tr>`;
+      $("#list-cart").append(_html);
+
+      // change quantity 
+      $(document).on('click', `.js-cart-item[data-id=${product.id}] .js-change-quantity`, function() {
+        // console.log($(this)[0]);
+        let current_quantity = $(this).siblings(".quantity").first().val();
+        // console.log(current_quantity);
+        $(`.js-cart-item[data-id=${product.id}] .js-prd-price`).text(FormatCurrency(Number(product.price) * current_quantity));
+        let listCart = localStorage.getItem("cart");
+        console.log("Danh sách cũ ==========");
+        console.log(listCart);
+        listCart = JSON.parse(listCart);
+        listCart[product.id] = current_quantity;
+        localStorage.setItem("cart", JSON.stringify(listCart));
+        console.log("Danh sách mới ++++++++");
+        console.log(localStorage.getItem("cart"));
+        // ================
+
+      });
+    }
+    // const makeRequest = async(urlPrd, key, quantity, LoadCartItem) => {
+    //   const response = await fetch(`${urlPrd}/${key}`);
+    //   const json = await response.json();
+    //   // console.log(json);
+    //   LoadCartItem(json, quantity);
+    // };
+
+  // window.localStorage.clear();
+  // Promise 
+  const LoadViewCart = new Promise((resolve, reject) => {
+
+    let strCart = localStorage.getItem("cart");
+    let listCart = JSON.parse(strCart);
+    $("#count-cart").text(Object.keys(listCart).length);
+    return resolve(listCart);
+  });
+  LoadViewCart
+    .then((listCart) => {
+      return new Promise((resolve, reject) => {
+        for (const key in listCart) {
+          fetch(`${urlPrd}/${key}`, { method: 'GET' })
+            .then(res => res.json())
+            .then(data => {
+              LoadCartItem(data, listCart[key]);
+              SetTotalPayment(data.price, listCart[key]);
+            });
+        }
+        return resolve();
+      })
+    }).then(() => {
+      return new Promise((resolve, reject) => {
+        PaymentView();
+        return resolve();
+      })
+    });
+
+  const SetTotalPayment = (price, quantity) => {
+    let currentTotal = Number(price) * Number(quantity);
+    let totalOld = Number(localStorage.getItem("total_payment"));
+    localStorage.setItem("total_payment", currentTotal + totalOld);
+  };
+
+  const PaymentView = () => {
+    let totalPayment = Number(localStorage.getItem("total_payment"));
+    console.log(totalPayment);
+    $("#js-total-payment").text(FormatCurrency(totalPayment));
+    $("#js-total-vat").text(FormatCurrency(totalPayment / 10));
+    $("#js-final-total").text(FormatCurrency(totalPayment + totalPayment / 10));
+  }
+
+
+  // cart page
+  if (typeof localStorage.getItem('cart') !== "undefined" && localStorage.getItem('cart') !== null) {
+    // layout content
+    $("#js-cart-empty").hide();
+    $("#js-cart-not-empty").show();
+    localStorage.setItem("total_payment", "");
+    const loadPageCart = LoadViewCart;
+  } else {
+    console.log("chưa có cart");
+    $("#count-cart").text("");
+    $("#js-cart-empty").show();
+    $("#js-cart-not-empty").hide();
+  }
+
+  // function Abc(key, listCart) {
+  //   fetch(`${urlPrd}/${key}`, { method: 'GET' })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       CartItem(data, listCart[key]);
+  //       // tính total payment
+  //       let currentTotal = Number(data.price) * Number(listCart[key]);
+  //       let totalOld = Number(localStorage.getItem("total_payment"));
+  //       // set total_payment
+  //       localStorage.setItem("total_payment", currentTotal + totalOld);
+  //       // show ra view total
+
+  //       // let totalPayment = Number(localStorage.getItem("total_payment"));
+  //       // $("#js-total-payment").text(FormatCurrency(totalPayment));
+  //       // $("#js-total-vat").text(FormatCurrency(totalPayment / 10));
+  //       // $("#js-final-total").text(FormatCurrency(totalPayment + totalPayment / 10));
+  //     });
+  //   PaymentView();
+  // }
+
+
+
+
+
+
+
+
+
+
+
+  // page detail.html 
+  if (typeof localStorage.getItem('id_detail') !== "undefined" && localStorage.getItem('id_detail') !== null) {
+    fetch(`${urlPrd}/${localStorage.getItem('id_detail')}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        fetch(`${urlCate}/${data.category_id}`, { method: 'GET' })
+          .then(res => res.json())
+          .then(data => {
+            $("#category_id").text(data.name);
+          });
+        let _html = "";
+        _html += ItemContent(data);
+        $("#prd-name").text(data.name);
+        $("#prd-price").text(FormatCurrency(Number(data.price)) + " ₫");
+        $("input#prd-id").val(data.id);
+        // load ảnh chi tiết;
+        fetch(`${urlPrdImg}?product_id=${localStorage.getItem('id_detail')}`, { method: 'GET' })
+          .then(res => res.json())
+          .then(data => {
+            data.forEach(product_img => {
+              _html += ItemContent(product_img);
+            });
+            let dotContent = `<div class="col-2 owl-carousel owl-theme p-0" id="js-dot-detail">`;
+            dotContent += _html;
+            dotContent += `</div>`;
+            let stageContent = `<div class="col-10 owl-carousel owl-theme " id="js-stage-detail">`;
+            stageContent += _html;
+            stageContent += `</div>`;
+            $("#carousel-img").append(dotContent + stageContent);
+            LoadCarousel();
+          });
+        // Load sản phẩm cùng loại
+        fetch(`${urlPrd}?category_id=${data.category_id}&_limit=8`, { method: 'GET' })
+          .then(res => res.json())
+          .then(data => {
+            let txtCarousel = `<div class="owl-carousel owl-theme" id="js-carousel-prd">`;
+            data.forEach(product => {
+              txtCarousel += `<div class="prd-item item" data-id="${product.id}">
+                          <a href="detail.html" class="d-block m-0 p-0 text-center">
                             <figure class="prd-img">
                               <img class="lazyload full zoom" data-src="./public/images/products/${product.image}" alt="" loading="lazy" height="300" width="300" >
                               <i class="fad fa-cart-arrow-down"></i>
@@ -188,143 +362,233 @@ $(function() {
                             </div>
                           </a>
                         </div>`;
+            });
+            txtCarousel += `</div>`;
+            $("#js-prd-cate").html(txtCarousel);
+            LoadDetailCarousel();
+            LoadImg();
+          });
       });
-      txtCarousel += `</div>`;
-      $("#js-prd-hot").html(txtPrd);
-      $("#js-prd-new").html(txtPrd);
-      $("#prd-cate").html(txtCarousel);
-      // carousel product cate detail
-      $("#js-carousel-prd").owlCarousel({
-        merge: true,
-        nav: true,
-        navText: ["<i class='fal fa-chevron-circle-left'></i>", "<i class='fal fa-chevron-circle-right'></i>"],
-        items: 4,
-        margin: 20,
-        dots: false,
-        loop: true,
-        autoplayHoverPause: true,
-        responsiveRefreshRate: 100,
-      })
-      $("#js-carousel-prd").mouseenter(function() {
-        $("#js-carousel-prd .owl-nav > *").fadeIn();
-        $("#js-carousel-prd .owl-nav .owl-next i").animate({ marginRight: '0px' });
-        $("#js-carousel-prd .owl-nav .owl-prev i").animate({ marginLeft: '0px' });
-      }).mouseleave(function() {
-        $("#js-carousel-prd .owl-nav > *").fadeOut();
-        $("#js-carousel-prd .owl-nav .owl-next i").animate({ marginRight: '25px' });
-        $("#js-carousel-prd .owl-nav .owl-prev i").animate({ marginLeft: '25px' });
-      })
-      LoadImg();
-    });
-  // carousel product cate detail
-  $("#js-carousel-prd").owlCarousel({
-    merge: true,
-    nav: true,
-    navText: ["<i class='fal fa-chevron-circle-left'></i>", "<i class='fal fa-chevron-circle-right'></i>"],
-    items: 4,
-    dots: false,
-    loop: true,
-    autoplayHoverPause: true,
-    responsiveRefreshRate: 100,
-  })
-  const FormatCurrency = (olded, discount = 0) => {
-      let old = olded;
-      let result = "";
-      let number;
-      if (discount == 0) {
-        number = old;
-      } else {
-        number = old * (100 - discount) / 100;
-      }
-      890000
-      number = number.toString(10);
-      let index = 0;
-      for (let i = number.length - 1; i >= 0; i--) {
-        if (index < 3) {
-          result += "0";
-        } else if (index == 3 || index == 6) {
-          result += "." + number[i];
-        } else {
-          result += number[i];
-        };
-        index++;
-      };
-      result = result.split("").reverse().join("");
-      // console.log(result);
-      return result;
-    }
-    // Lazyloading image
-  const LoadImg = () => {
-    if ('loading' in HTMLImageElement.prototype) {
-      const images = document.querySelectorAll("img.lazyload");
-      images.forEach(img => {
-        img.src = img.dataset.src;
-      });
-    } else {
-      // import Lazysize
-      let script = document.createElement("script");
-      script.async = true;
-      script.src =
-        "./public/javascripts/lazysizes.min.js";
-      document.body.appendChild(script);
-    }
+
+  } else {
+    console.log("chưa có ");
   }
 
-  // số lượng(quantity) khi order
-  $(".js-change-quantity").click(function() {
-    var current = $(this).attr("change");
+  // window.localStorage.clear();
+  // số lượng(quantity) khi buy,order
+  $(document).on("click", ".js-change-quantity", function() {
+    let current = $(this).attr("change");
+    let quantity = Number($(this).siblings(".number").first().text());
     switch (current) {
       case "abate":
         {
-          var quantity = $(this).next().text();
-          if (quantity == "1") {
+          if (quantity == 1) {
             $(this).next().text(1);
-          } else if (quantity == "2") {
-            $(this).next().text(Number(quantity) - 1);
             $(this).removeClass("active");
-          } else {
-            $(this).next().text(Number(quantity) - 1);
+          } else if (quantity == 2) {
+            $(this).next().text(1);
+            $(this).removeClass("active");
+          } else if (quantity > 2) {
+            $(this).next().text(quantity - 1);
             $(this).addClass("active");
           }
-          var currentId = $(this).next().attr('data-id');
-          $.ajax({
-            url: "./Cart/UpdateQuantity",
-            method: "post",
-            data: {
-              "id": Number(currentId),
-              "quantity": Number($(this).next().text()),
-            },
-            success: function(data) {
-              window.location.reload(true);
-            }
-          });
+          $(this).siblings('.augment').first().addClass("active");
+          $(this).siblings('.number').first().val($(this).next().text());
+          $(this).siblings('.quantity').first().val($(this).next().text());
           break;
         }
       case "augment":
         {
-          var quantity = $(this).prev().text();
-          if (quantity == "5") {
-            $(this).prev().text(5);
+          if (quantity == 20) {
+            $(this).prev().text(20);
+            $(this).removeClass("active");
           } else {
-            $(this).prev().text(Number(quantity) + 1);
-            $(this).prev().prev().addClass("active");
+            $(this).prev().text(quantity + 1);
+            $(this).prev().addClass("active");
           }
-          var currentId = $(this).prev().attr('data-id');
-          $.ajax({
-            url: "./Cart/UpdateQuantity",
-            method: "post",
-            data: {
-              "id": Number(currentId),
-              "quantity": Number($(this).prev().text()),
-            },
-            success: function(data) {
-              window.location.reload(true);
-            }
-          });
+          $(this).siblings(".abate").first().addClass("active");
+          $(this).siblings(".quantity").first().val($(this).prev().text());
           break;
         }
     }
   });
+  //  nhấn mua
+  $(document).on("click", '#js-add-cart', function() {
+    let quantity = Number($("#quantity").val());
+    let prd_id = $("input#prd-id").val();
+    if (typeof localStorage.getItem("cart") === "undefined" || localStorage.getItem("cart") === null) {
+      localStorage.setItem("cart", JSON.stringify({}));
+    }
+    let strCart = localStorage.getItem("cart");
+    let Arr = JSON.parse(strCart);
+    let check = false;
+    for (const key in Arr) {
+      if (key == prd_id) {
+        check = true;
+        Arr[key] += quantity;
+      }
+    }
+    if (check) {
+      // xử lý sp có trong cart rôi
+      localStorage.setItem("cart", JSON.stringify(Arr));
+    } else {
+      // sp chưa có trong cart
+      listCart = strCart.substring(1, strCart.length - 1);
+      if (listCart != "") {
+        listCart += ",";
+      }
+      listCart += `"${prd_id}":${quantity}`;
+      listCart = "{" + listCart + "}";
+      localStorage.setItem("cart", listCart);
+      $("#count-cart").text(Object.keys(Arr).length + 1);
+    }
+  });
+  //  cart.html page 
+
+
+
+
+  const LoadCarousel = () => {
+    let sync1 = $("#js-stage-detail");
+    let sync2 = $("#js-dot-detail");
+    sync1.owlCarousel({
+        nav: true,
+        navText: ["<i class='far fa-chevron-left'></i>", "<i class='far fa-chevron-right'></i>"],
+        items: 1,
+        dots: false,
+        autoplayHoverPause: true,
+        // autoplay: true,
+        // autoplayTimeout: 5000,
+        rewind: true,
+        startPosition: 0,
+        responsiveRefreshRate: 200,
+      }).on('changed.owl.carousel', syncPosition)
+      .on("click", ".owl-nav", function(el) {});
+
+    $("#js-stage-detail").mouseenter(function() {
+      $("#js-stage-detail .owl-nav > *").fadeIn();
+      $("#js-stage-detail .owl-nav .owl-next i").animate({ marginRight: '0px' });
+      $("#js-stage-detail .owl-nav .owl-prev i").animate({ marginLeft: '0px' });
+    }).mouseleave(function() {
+      $("#js-stage-detail .owl-nav > *").fadeOut();
+      $("#js-stage-detail .owl-nav .owl-next i").animate({ marginRight: '10px' });
+      $("#js-stage-detail .owl-nav .owl-prev i").animate({ marginLeft: '10px' });
+    })
+
+    sync2.on('initialized.owl.carousel', function() {
+      sync2.find(".owl-item").eq(0).addClass("synced");
+    }).owlCarousel({
+      nav: false,
+      items: 5,
+      dots: false,
+      slideBy: 5,
+      rewind: true,
+      mouseDrag: false,
+      responsiveRefreshRate: 100,
+    }).on("click", ".owl-item", function(el) {
+      el.preventDefault();
+      var number = $(this).index();
+      sync1.data('owl.carousel').to(number, 300, true);
+
+    });
+
+    function syncPosition(el) {
+      var count = el.item.count - 1;
+      var current = el.item.index;
+
+      $("#js-dot-detail")
+        .find(".owl-item")
+        .removeClass("synced")
+        .eq(current)
+        .addClass("synced");
+
+      if ($("#sync2").data("owl.carousel") !== undefined) {
+        var lenghtOption = sync2.find('.owl-item').length;
+        var listObj = sync2.find('.owl-item.active');
+        var listIndex = [];
+        for (var i = 0; i < 5; i++) {
+          listIndex[i] = listObj.eq(i).index();
+        };
+        center(current, listIndex, lenghtOption);
+      }
+    }
+
+    function center(number, array, end) {
+      var found = false;
+      var num = number;
+      var listIndex = array;
+      for (var i in listIndex) {
+        if (num === listIndex[i]) {
+          var found = true;
+        }
+      }
+      if (found === false) {
+        if (num > listIndex[listIndex.length - 1]) {
+          if (num === 7) {
+            sync2.data('owl.carousel').to(end - listIndex.length, 100, true);
+          } else {
+            sync2.data('owl.carousel').to(num - listIndex.length + 2, 100, true);
+          }
+          // console.log("current out ListIndex: th1");
+        } else {
+          if (num - 1 === -1) {
+            num = 0;
+
+          }
+          sync2.data('owl.carousel').to(num, 100, true);
+          // console.log("current out ListIndex: th2");
+        }
+      } else if (num === listIndex[listIndex.length - 1]) {
+        // console.log("current == ListIndex end");
+        if (num === end - 1) {
+          sync2.data('owl.carousel').to(listIndex[1] - 1, 100, true);
+        } else {
+          sync2.data('owl.carousel').to(listIndex[1], 100, true);
+        };
+
+      } else if (num === listIndex[0]) {
+        if (num === 0) {
+          sync2.data('owl.carousel').to(0, 100, true);
+        } else {
+          sync2.data('owl.carousel').to(num - 1, 100, true);
+        };
+        // console.log("current == ListIndex star");
+      } else {
+        // console.log("k làm gì cả");
+      }
+    }
+  }
+
+  const LoadDetailCarousel = () => {
+    // carousel product cate detail
+    $("#js-carousel-prd").owlCarousel({
+      merge: true,
+      nav: true,
+      navText: ["<i class='fal fa-chevron-circle-left'></i>", "<i class='fal fa-chevron-circle-right'></i>"],
+      items: 4,
+      margin: 20,
+      dots: false,
+      loop: false,
+      rewind: true,
+      autoplayHoverPause: true,
+      responsiveRefreshRate: 100,
+    })
+    $("#js-carousel-prd").mouseenter(function() {
+      $("#js-carousel-prd .owl-nav > *").fadeIn();
+      $("#js-carousel-prd .owl-nav .owl-next i").animate({ marginRight: '0px' });
+      $("#js-carousel-prd .owl-nav .owl-prev i").animate({ marginLeft: '0px' });
+    }).mouseleave(function() {
+      $("#js-carousel-prd .owl-nav > *").fadeOut();
+      $("#js-carousel-prd .owl-nav .owl-next i").animate({ marginRight: '15px' });
+      $("#js-carousel-prd .owl-nav .owl-prev i").animate({ marginLeft: '15px' });
+    })
+  }
+
+
+
+
+  //  load  carousel sản phẩm
+
 
   // Sự kiện đợi
   const txtWait = `<div class="sk-wave">
@@ -335,6 +599,25 @@ $(function() {
                         <div class="sk-rect sk-rect5"></div>
                       </div>`;
   $(".waiting").click(function() {
-    $(this).html(txtWait);
-  })
+      $(this).html(txtWait);
+    })
+    // show form coupon 
+
+  $("#js-show-form-coupon").click(function(el) {
+      $("#js-check-coupon").slideToggle("slow");
+    })
+    // custom payment method
+  $("#js-transfer").click(function() {
+    if ($(this).is(":checked")) {
+      $("#js-transfer-desc").slideDown("slow");
+      $("#js-cash-desc").slideUp("slow");
+    }
+  });
+  $("#js-cash").click(function() {
+    if ($(this).is(":checked")) {
+      $("#js-transfer-desc").slideUp("slow");
+      $("#js-cash-desc").slideDown("slow");
+    }
+  });
+
 })

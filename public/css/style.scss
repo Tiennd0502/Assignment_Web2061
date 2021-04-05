@@ -4,6 +4,7 @@ $Black: #000000;
 $TextColor: #292929;
 $Border:rgba(0, 0, 0, 0.125);
 $White: #fff;
+$Grey: #666666;
 @mixin flex($flex:row, $justify:flex-start, $align:stretch, $wrap:nowrap) {
   display: flex;
   flex-direction: $flex;
@@ -24,6 +25,8 @@ body {
   font-family: "Roboto", sans-serif;
   color: $Black;
   font-size: 16px;
+  padding: 0;
+  margin: 0;
 }
 
 .header {
@@ -175,6 +178,150 @@ body {
       }
     }
   }
+  &#js-stage-detail {
+    .owl-nav {
+      [class*=owl-] {
+        i {
+          font-size: 35px;
+          color: $Black;
+          &:hover {
+            color: $Red;
+          }
+        }
+      }
+    }
+  }
+  &#js-dot-detail {
+    .owl-stage-outer {
+      .owl-stage {
+        margin: 0;
+        width: 100%!important;
+        @include flex(column, space-between);
+        .owl-item {
+          width: 100%!important;
+          .item {
+            a {
+              .figure {
+                overflow: hidden;
+                backface-visibility: hidden;
+                &-img {
+                  margin: 0;
+                }
+              }
+              img {
+                width: 100%;
+                height: auto;
+                opacity: 0.5;
+                transition: all 0.6s;
+                -webkit-transition: all 0.6s;
+                -moz-transition: all 0.6s;
+                -ms-transition: all 0.6s;
+                -o-transition: all 0.6s;
+              }
+              &:hover {
+                .figure {
+                  border: 1px solid $Border;
+                }
+                img {
+                  opacity: 1;
+                  transform: translateY(-5px);
+                  -webkit-transform: translateY(-5);
+                  -moz-transform: translateY(-5);
+                  -ms-transform: translateY(-5);
+                  -o-transform: translateY(-5);
+                }
+              }
+            }
+          }
+          &.active.synced {
+            .figure {
+              border: 1px solid $Border;
+            }
+            img {
+              opacity: 1;
+              transform: translateY(-5px);
+              -webkit-transform: translateY(-5);
+              -moz-transform: translateY(-5);
+              -ms-transform: translateY(-5);
+              -o-transform: translateY(-5);
+            }
+          }
+        }
+      }
+    }
+  }
+  &#js-carousel-prd {
+    .owl-nav {
+      top: 35%;
+      [class*=owl-] {
+        i {
+          font-size: 35px;
+          color: $Black;
+          &:hover {
+            color: $Red;
+          }
+        }
+      }
+      .owl-next {
+        margin-right: 15px;
+      }
+      .owl-prev {
+        margin-left: 15px;
+      }
+    }
+  }
+}
+
+.choose-number {
+  display: flex;
+  border: 1px solid #dfdfdf;
+  background: #fff;
+  border-radius: 3px;
+  line-height: 32px;
+  font-size: 14px;
+  color: #333;
+  width: fit-content;
+  .abate {
+    border-right: 1px solid #dfdfdf;
+    background: #fff;
+    padding: 0 12px;
+    height: 32px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    i {
+      font-weight: bold;
+    }
+    &.active {
+      i {
+        color: #288ad6;
+      }
+    }
+  }
+  .number {
+    font-size: 14px;
+    color: #333;
+    padding: 0 15px;
+    height: 32px;
+    text-align: center;
+  }
+  .augment {
+    border-left: 1px solid #dfdfdf;
+    background: #fff;
+    padding: 0 12px;
+    height: 32px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    &.active {
+      i {
+        color: #288ad6;
+      }
+    }
+    i {
+      font-weight: bold;
+    }
+  }
 }
 
 .section-category {
@@ -248,11 +395,12 @@ body {
     .prd-name {
       h5 {
         font-weight: 500;
-        @include textOverflow(2);
+        @include textOverflow(1);
       }
     }
     .prd-price {
       color: $Red;
+      font-size: inherit;
     }
   }
   &:hover {
@@ -268,6 +416,25 @@ body {
         -o-transform: scale(1.1);
       }
     }
+  }
+}
+
+.prd-name {
+  h1 {
+    font-size: 24px;
+  }
+}
+
+.prd-price {
+  color: $Red;
+  font-size: 26px;
+}
+
+.prd-meta {
+  span {
+    display: block;
+    padding: 6px 0;
+    border-top: 1px dashed $Border;
   }
 }
 
@@ -288,10 +455,241 @@ body {
   }
 }
 
-// Large devices (desktops, less than 1200px)
-@media (max-width: 1199.98px) {
-  
+.section-brand {
+  &-item:not(:first-child) {
+    border-left: 1px dashed $Border;
+  }
+  &-item {
+    .figure {
+      margin: 0;
+      padding: 20px;
+      img {
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+    }
+  }
 }
+
+.footer {
+  color: $TextColor;
+  border-top: 1px solid $Border;
+  margin-top: 20px;
+  position: relative;
+  top: 0;
+  left: 0;
+  background-color: $White;
+  .info {
+    i {
+      color: $Red;
+      margin-right: 10px;
+    }
+  }
+  .policy {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    p {
+      margin-top: 0;
+    }
+    &-item {
+      padding-bottom: 6px;
+      .policy-link {
+        color: $TextColor;
+        &:hover {
+          color: $Red;
+        }
+      }
+    }
+  }
+}
+
+.btn-red {
+  font-weight: bold;
+  color: $White;
+  background-color: $Red;
+  &:hover {
+    opacity: 0.8;
+    color: $White;
+  }
+}
+
+// cart page
+.table {
+  .prd-name {
+    font-size: 14px;
+  }
+  color: $Black;
+  .prd-price {
+    font-size: 15px;
+    min-width: 100px;
+  }
+  td {
+    vertical-align: middle;
+  }
+  th {
+    border: none;
+  }
+}
+
+.total {
+  font-size: 14px;
+}
+
+.cart {
+  &-empty {
+    width: 50%;
+    margin: 0 auto;
+    i {
+      display: block;
+      color: $Red;
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+    span.note-empty {
+      display: block;
+      margin-bottom: 20px;
+    }
+    a {
+      display: block;
+      margin: 0 auto;
+      width: fit-content;
+    }
+  }
+  &-item {
+    &:first-child {
+      td.info-prd {
+        border: none;
+      }
+    }
+    .info-prd {
+      @include flex(row, flex-start, center);
+      i {
+        margin-right: 10px;
+        font-size: 20px;
+        &:hover {
+          color: $Red;
+        }
+      }
+      .figure {
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        margin-right: 10px;
+        img {
+          max-width: 50px;
+          height: auto;
+        }
+      }
+      span {
+        font-size: 14px;
+        @include textOverflow(1);
+      }
+    }
+    td {
+      padding: 0.5rem;
+      .choose-number {
+        .abate {
+          padding: 0 5px;
+        }
+        .augment {
+          padding: 0 5px;
+        }
+        .number {
+          padding: 0 8px;
+        }
+      }
+    }
+  }
+  th {
+    min-width: 100px;
+  }
+}
+
+// @keyframes glowing {
+//   0% {
+//     color: $Red;
+//     text-shadow: 0 0 3px $Red;
+//   }
+//   33% {
+//     color: rgb(236, 240, 32);
+//     text-shadow: 0 0 3px rgb(236, 240, 32);
+//   }
+//   66% {
+//     color: #0f92f0;
+//     text-shadow: 0 0 3px #0f92f0;
+//   }
+//   100% {
+//     color: $Red;
+//     text-shadow: 0 0 3px $Red;
+//   }
+// }
+// .glow {
+//   animation: glowing 3s infinite;
+//   -webkit-animation: glowing 3s infinite;
+// }
+.coupon {
+  .widget-title {
+    font-size: 16px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #ececec;
+    a:hover {
+      color: $Red;
+    }
+  }
+  .form-coupon {
+    display: none;
+    border: 2px dashed $Red;
+    padding: 20px;
+  }
+}
+
+// .custom-info {
+//   .title {
+//     font-weight: 600;
+//   }
+// }
+.custom-order {
+  border: 2px solid $Red;
+  .table {
+    font-size: 14px;
+    td {
+      color: $Grey;
+    }
+    tfoot {
+      tr {
+        &:last-child {
+          td {
+            border-bottom: 3px solid $Border;
+          }
+        }
+      }
+    }
+  }
+  .btn-order {
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// 
+#accordion {
+  .card {
+    .form-check-label {
+      vertical-align: sub;
+    }
+  }
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {}
 
 // Medium devices (tablets, less than 992px)
 @media (max-width: 991.98px) {}

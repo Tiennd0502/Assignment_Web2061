@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoe shop</title>
+  <link rel="shortcut icon" href="public/images/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="public/css/app.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="public/fonts/fontawesome-pro-5.14.0-web/css/all.min.css">
+  <link rel="stylesheet" href="./public/plugin/owlcarousel/assets/owl.carousel.css">
+  <link rel="stylesheet" href="./public/plugin/owlcarousel/assets/owl.theme.default.css">
+
+  <link rel="stylesheet" type="text/css" href="public/css/style.css">
+</head>
+
+<body>
+  <div class=" bg-white">
+    <header class="header">
+      <div class="container p-0">
+        <div class="row">
+          <nav class="col-lg-6 col-md-4 navbar navbar-expand-lg navbar-light ">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Trang chủ <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Sản phẩm <i class="fal fa-angle-down"></i>
+									</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="js-menu-category"></div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Khuyến mãi</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Tin tức</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Liên hệ</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="logo col-lg-2 col-md-4">
+            <a href="index.html"><img class="img-fluid" src="./public/images/logo.png" alt=""></a>
+          </div>
+          <div class="col-lg-4 col-md-4 nav-right pt-2 pb-2">
+            <ul class="list-group list-group-horizontal justify-content-end align-items-center">
+              <li class="list-group-item dropdown">
+                <i class="far fa-search"></i>
+                <div class="dropdown-menu p-2 " aria-labelledby="navbarDropdown">
+                  <form class="search">
+                    <input class="form-control" type="text" placeholder="Từ khóa...">
+                    <i class="far fa-search"></i>
+                  </form>
+                </div>
+              </li>
+              <li class="list-group-item"><i class="fas fa-user" data-toggle="modal" data-target="#login"></i></li>
+              <li class="list-group-item">
+                <a href="cart.html"><i class="far fa-shopping-basket"></i><span class="badge badge-red rounded-circle noti-icon-badge" id="count-cart"></span></a>
+              </li>
+            </ul>
+            <!-- Modal -->
+            <div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="loginLabel">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+                  </div>
+                  <div class="modal-body">
+                    ...
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Đăng nhập</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="container mt-3 payment mb-5 p-0">
+      <div class="title">
+        <h3 class="border-bottom pb-2">THANH TOÁN</h3>
+        <div class="coupon">
+          <h3 class="widget-title "><i class="fas fa-tags text-secondary mr-1 "></i>Bạn có mã ưu đãi ? <a href="javascript:void(0)" class="ml-2" id="js-show-form-coupon">Nhấn vào đây</a></h3>
+          <form action="" class="form-coupon" id="js-check-coupon">
+            <div class="form-group mb-0">
+              <label for="coupon_code">Nếu bạn có mã giảm giá, vui lòng điền vào phía bên dưới.</label>
+              <input type="text" class="form-control " id="coupon_code" placeholder="Mã ưu đãi">
+              <button type="button" class="d-block apply_coupon btn btn-red mt-2 waves-effect waves-light">ÁP DỤNG</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <form action="order.html" class=" row mt-3">
+        <div class="col-lg-7 pt-2">
+          <div class="custom-info pt-2">
+            <div class="title font-weight-bold">THÔNG TIN THANH TOÁN</div>
+            <div class="form-check form-check-inline mt-2">
+              <input class="form-check-input" type="radio" name="gender" id="male" value="1" checked>
+              <label class="form-check-label" for="male">
+                  Anh
+                </label>
+            </div>
+            <div class="form-check form-check-inline mt-2">
+              <input class="form-check-input" type="radio" name="gender" id="female" value="0">
+              <label class="form-check-label" for="female">
+                  Chị
+                </label>
+            </div>
+            <div class="form-group mt-2">
+              <label for="username">Họ và tên</label>
+              <input type="text" class="form-control" id="username" placeholder="Họ và tên...">
+            </div>
+            <div class="form-group">
+              <label for="address">Địa chỉ</label>
+              <input type="text" class="form-control" id="address" placeholder="Địa chỉ giao hàng">
+            </div>
+            <div class="form-group">
+              <label for="phone">Số điện thoại</label>
+              <input type="text" class="form-control" id="phone" placeholder="Số điện thoại...">
+            </div>
+            <div class="form-group">
+              <label for="email">Email </label>
+              <input type="email" class="form-control" id="email" placeholder="abc123@gmail.com">
+              <small id="emailHelp" class="form-text text-muted">Chúng tôi sẽ không bao giờ chia sẻ email của bạn với bất kỳ ai khác.</small>
+            </div>
+            <div class="form-group">
+              <label for="note">Ghi chú</label>
+              <textarea class="form-control" id="note" rows="3" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 pt-2">
+          <div class="custom-order p-2">
+            <div class="title font-weight-bold">ĐƠN HÀNG CỦA BẠN</div>
+            <table class="table">
+              <thead class="">
+                <tr>
+                  <th scope="col">SẢN PHẨM</th>
+                  <th scope="col" class="text-right">TỔNG</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="prd-name">
+                      Giày thể thao Just Do It nam nữ loại đẹp
+                      <strong class="prd-quantity">× 1</strong>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <div class="prd-price"><strong>3.306.000 đ</strong></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="prd-name">
+                      Giày Thể Thao Nam Biti's Hunter X Liteknit DSMH02201REU (Rêu)
+                      <strong class="prd-quantity">× 1</strong>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <div class="prd-price"><strong>3.306.000 đ</strong></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="prd-name">
+                      Giày Thể Thao Nam Biti's Hunter Core - Midnight Black Inverted DSMH01203DEN (Đen)
+                      <strong class="prd-quantity">× 1</strong>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <div class="prd-price"><strong>3.306.000 đ</strong></div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="">
+                  <td class="font-weight-bold">Tổng</td>
+                  <td class="font-weight-bold text-right">3.306.000 đ</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold">Thuế VAT(10%)</td>
+                  <td class="font-weight-bold text-right">330.600 đ</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold">Tổng tiền</td>
+                  <td class="font-weight-bold text-right">3.636.600 đ</td>
+                </tr>
+              </tfoot>
+            </table>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payment-method" id="js-transfer" value="1" checked>
+              <label class="form-check-label ml-1" for="js-transfer">
+                <strong>Chuyển khoản ngân hàng</strong>
+              </label>
+              <p class="fs-14 mt-1" id="js-transfer-desc">
+                Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.
+              </p>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payment-method" id="js-cash" value="0">
+              <label class="form-check-label ml-1" for="js-cash">
+                <strong>Trả tiền mặt khi nhận hàng</strong>
+              </label>
+              <p class="fs-14 mt-1" id="js-cash-desc">
+                Trả tiền mặt khi giao hàng.
+              </p>
+            </div>
+
+            <div class="btn-order mt-2">
+              <button class="btn btn-red d-block waves-effect waves-light"> ĐẶT HÀNG</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+
+    <section class="container mt-4 p-0">
+      <div class="title text-center">
+        <h2><span>Thương hiệu nỗi tiếng</span></h2>
+        <small class="text-muted">Chúng tôi luôn đem đến khách hàng những thương hiệu hàng đầu thế giới</small>
+      </div>
+      <div class="row section-brand mt-3" id="js-section-brand">
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container p-0">
+        <div class="row">
+          <div class="col-lg-4">
+            <h4>THÔNG TIN LIÊN HỆ</h4>
+            <div class="info">
+              <p class="company">
+                Công ty cổ phần EGO Sport là một công ty cổ đông thuộc sở hữu của EGO Creative với vai trò là nhà cung cấp các phụ kiện thời trang thể thao đến với khách hàng khắp mọi miền tổ quốc.
+              </p>
+              <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: 435 Âu Cơ, Liên Chiểu, Đà Nẵng</p>
+              <p><i class="fas fa-phone-alt"></i> Hotline: (+84) 905 692 314</p>
+              <p><i class="fas fa-envelope-square"></i> Email: giaydep@gmail.com</p>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <h4>CHÍNH SÁCH</h4>
+            <ul class="policy">
+              <li class="policy-item"><a href="" class="policy-link">Hướng dẫn mua hàng</a></li>
+              <li class="policy-item"><a href="" class="policy-link">Chính sách thanh toán</a></li>
+              <li class="policy-item"><a href="" class="policy-link">Chính sách bảo hành</a></li>
+              <li class="policy-item"><a href="" class="policy-link">Chính sách vận chuyển</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2">
+            <h4>THÔNG TIN</h4>
+            <ul class="policy">
+              <li class="policy-item"><a href="" class="policy-link">Về chúng tôi</a></li>
+              <li class="policy-item"><a href="" class="policy-link">Câu hỏi thường gặp</a></li>
+              <li class="policy-item"><a href="" class="policy-link">Tin tức</a></li>
+              <li class="policy-item"><a href="" class="policy-link">Liên hệ</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h4>ĐĂNG KÍ NHẬN TIN</h4>
+            <p>Gửi email đăng ký để nhận thông báo mới nhất về khuyến mãi, sự kiện nổi bật dành cho khách hàng.</p>
+            <form method="get" action="">
+              <input type="text" class="form-control d-inline w-auto" name="" id="" placeholder="Email của bạn...">
+              <button class="btn btn-red waves-effect waves-light">ĐĂNG KÍ</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="public/javascripts/jquery-3.5.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  <script src="./public/plugin/owlcarousel/owl.carousel.js"></script>
+  <script src="public/javascripts/js.js"></script>
+</body>
+
+</html>
