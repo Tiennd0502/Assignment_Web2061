@@ -108,7 +108,7 @@
         </div>
       </div>
 
-      <form action="order.html" class=" row mt-3">
+      <form action="order.html" class="row mt-3" id="js-payment">
         <div class="col-lg-7 pt-2">
           <div class="custom-info pt-2">
             <div class="title font-weight-bold">THÔNG TIN THANH TOÁN</div>
@@ -125,8 +125,8 @@
                 </label>
             </div>
             <div class="form-group mt-2">
-              <label for="username">Họ và tên</label>
-              <input type="text" class="form-control" id="username" placeholder="Họ và tên...">
+              <label for="name">Họ và tên</label>
+              <input type="text" class="form-control" id="name" placeholder="Họ và tên...">
             </div>
             <div class="form-group">
               <label for="address">Địa chỉ</label>
@@ -157,53 +157,19 @@
                   <th scope="col" class="text-right">TỔNG</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="prd-name">
-                      Giày thể thao Just Do It nam nữ loại đẹp
-                      <strong class="prd-quantity">× 1</strong>
-                    </div>
-                  </td>
-                  <td class="text-right">
-                    <div class="prd-price"><strong>3.306.000 đ</strong></div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="prd-name">
-                      Giày Thể Thao Nam Biti's Hunter X Liteknit DSMH02201REU (Rêu)
-                      <strong class="prd-quantity">× 1</strong>
-                    </div>
-                  </td>
-                  <td class="text-right">
-                    <div class="prd-price"><strong>3.306.000 đ</strong></div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="prd-name">
-                      Giày Thể Thao Nam Biti's Hunter Core - Midnight Black Inverted DSMH01203DEN (Đen)
-                      <strong class="prd-quantity">× 1</strong>
-                    </div>
-                  </td>
-                  <td class="text-right">
-                    <div class="prd-price"><strong>3.306.000 đ</strong></div>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="js-list-payment"></tbody>
               <tfoot>
                 <tr class="">
                   <td class="font-weight-bold">Tổng</td>
-                  <td class="font-weight-bold text-right">3.306.000 đ</td>
+                  <td class="font-weight-bold prd-price text-right"><strong id="js-total-payment"></strong> ₫</td>
                 </tr>
                 <tr>
                   <td class="font-weight-bold">Thuế VAT(10%)</td>
-                  <td class="font-weight-bold text-right">330.600 đ</td>
+                  <td class="font-weight-bold prd-price text-right"><strong id="js-total-vat"></strong> ₫</td>
                 </tr>
                 <tr>
                   <td class="font-weight-bold">Tổng tiền</td>
-                  <td class="font-weight-bold text-right">3.636.600 đ</td>
+                  <td class="font-weight-bold prd-price text-right"><strong id="js-final-total"></strong> ₫</td>
                 </tr>
               </tfoot>
             </table>
@@ -227,7 +193,10 @@
             </div>
 
             <div class="btn-order mt-2">
-              <button class="btn btn-red d-block waves-effect waves-light"> ĐẶT HÀNG</button>
+              <button type="button" class="btn btn-red d-block waves-effect waves-light" id="js-order"> ĐẶT HÀNG</button>
+            </div>
+            <div class="btn-order mt-2">
+              <a href="cart.html" class="btn btn-secondary d-block waves-effect waves-light">CHỈNH SỬA GIỎ HÀNG</a>
             </div>
           </div>
         </div>

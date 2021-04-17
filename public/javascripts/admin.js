@@ -1,7 +1,37 @@
 $(function() {
   const urlCate = 'http://localhost:3000/categories';
+  const urlPrd = 'http://localhost:3000/products';
+  const urlOrder = 'http://localhost:3000/orders';
+  const urlOrderDetail = 'http://localhost:3000/order_details';
+
   const addFormCate = document.querySelector('.form-add-category');
   const editFormCate = document.querySelector('.form-edit-category');
+  const FormatCurrency = (olded, discount = 0) => {
+    let old = olded;
+    let result = "";
+    let number;
+    if (discount == 0) {
+      number = old;
+    } else {
+      number = old * (100 - discount) / 100;
+    }
+    890000
+    number = number.toString(10);
+    let index = 0;
+    for (let i = number.length - 1; i >= 0; i--) {
+      if (index < 3) {
+        result += "0";
+      } else if (index == 3 || index == 6) {
+        result += "." + number[i];
+      } else {
+        result += number[i];
+      };
+      index++;
+    };
+    result = result.split("").reverse().join("");
+    // console.log(result);
+    return result;
+  }
   let idCate;
   fetch(urlCate, { method: 'GET' })
     .then(res => res.json())
@@ -72,8 +102,6 @@ $(function() {
       }
     }
     // end Function renderCate();
-
-
 
   const name = document.querySelector('#name');
   const slug = document.querySelector('#slug');
@@ -237,7 +265,6 @@ $(function() {
           body: JSON.stringify({
             name: editFormBrand.name.value,
             image: editFormBrand.image.files[0].name,
-
           })
         })
         .then(res => res.json())
@@ -248,6 +275,132 @@ $(function() {
     })
   }
 
+  const ViewOrderDetail = (data, name) => {
+    let _html = `<tr>
+                  <td>${data.id}</td>
+                  <td>
+                    <b>${name}</b>
+                  </td>
+                  <td>${data.quantity}</td>
+                  <td>${data.price}</td>
+                  <td class="text-right">${data.quantity *data.price}</td>
+                </tr>`;
+    $("#js-list-order-detail").append(_html);
+  }
+  const ViewOrder = (data) => {
+      let _html = `<tr data-id="${data.id}">
+                  <td><input type="checkbox" name=""></td>
+                  <td>${data.id}</td>
+                  <td>${data.name}</td>
+                  <td>${data.phone}</td>
+                  <td>${data.address}</td>
+                  <td>
+                    <select class="form-control" id="">
+                      <option value="0" ${(data.active == '0') ? 'selected' : ""}>Chưa giao hàng</option>
+                      <option value="1" ${(data.active == '1') ? 'selected' : ""}>Đã giao hàng</option>
+                    </select>
+                  </td>
+                  <td>
+                    <a href="order_detail.html" class="btn-show btn btn-outline-success waves-effect waves-light">Xem chi tiết</a>
+                    </td>
+                  <td>
+                    <a class="btn-del btn btn-outline-danger waves-effect waves-light" >Xóa</a>
+                  </td>
+                </tr>`;
+      $("#js-list-order").append(_html);
+      // Delete order
+      $(document).on("click", `#js-list-order tr[data-id=${data.id}] .btn-del`, () => {
+        // xóa order
+        fetch(`${urlOrder}/${data.id}`, {
+            method: "DELETE"
+          }).then(res => res.json())
+          .then(data => {
+            console.log(data);
+          });
+        // xóa order detail
+        fetch(`${urlOrderDetail}?order_id=${data.id}`, {
+            method: "GET"
+          }).then(res => res.json())
+          .then(data => {
+            for (const key in data) {
+              fetch(`${urlOrderDetail}/${data[key].id}`, {
+                  method: "DELETE"
+                }).then(res => res.json())
+                .then(data => {});
+            }
+          });
+      });
+      // Show detail order
+      $(document).on("click", `#js-list-order tr[data-id=${data.id}] .btn-show`, () => {
+        localStorage.setItem('order_detail', data.id);
+      });
+      $(document).on("change", `#js-list-order tr[data-id=${data.id}] select`, function() {
+        let value = $(this).val();
+        console.log(value);
+        fetch(`${urlOrder}/${data.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              active: value,
+            })
+          })
+          .then(res => res.json())
+          .then(() => {});
+      });
+    }
+    // order_detail page
+  if (typeof localStorage.getItem('order_detail') !== "undefined" && localStorage.getItem('order_detail') !== null) {
+    let showOrderId = localStorage.getItem('order_detail');
+    fetch(`${urlOrder}/${showOrderId}`, {
+        method: "GET"
+      }).then(res => res.json())
+      .then(data => {
+        $("#customer-name").text(data.name);
+        $("#order-id").text(data.id);
+        $("#customer-address").text(data.address);
+        $("#customer-phone").text(data.phone);
+        $("#customer-note").text(data.note);
+      });
+    // show list  order detail
+    fetch(`${urlOrderDetail}?order_id=${showOrderId}`, {
+        method: "GET"
+      }).then(res => res.json())
+      .then(data => {
+        let totalPayment = 0;
+        for (const key in data) {
+          fetch(`${urlPrd}/${data[key].id}`, {
+              method: "GET"
+            }).then(res => res.json())
+            .then(item => {
+              ViewOrderDetail(data[key], item.name);
+            });
+          // tính tổng
+          totalPayment += Number(data[key].price) * data[key].quantity;
+        }
+        TotalPaymentView(totalPayment);
+      })
+      // load view total order detai page
+  }
+  const TotalPaymentView = (totalPayment) => {
+    $("#total-payment").text(FormatCurrency(totalPayment));
+    $("#vat-payment").text(FormatCurrency(totalPayment / 10));
+    $("#final-payment").text(FormatCurrency(totalPayment + totalPayment / 10));
+  }
+
+  const Order = document.querySelector("#js-list-order");
+  if (Order) {
+    fetch(urlOrder, {
+        method: "GET",
+      })
+      .then(res => res.json())
+      .then((data) => {
+        for (const key in data) {
+          ViewOrder(data[key]);
+        }
+      });
+  }
 
 
 

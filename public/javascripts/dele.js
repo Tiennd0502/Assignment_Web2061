@@ -4,9 +4,6 @@ $(function() {
   const urlBrand = 'http://localhost:3000/brands';
   const urlPrd = 'http://localhost:3000/products';
   const urlPrdImg = 'http://localhost:3000/product_images';
-  const urlOrder = 'http://localhost:3000/orders';
-  const urlOrderDetail = 'http://localhost:3000/order_details';
-
   const FormatCurrency = (olded, discount = 0) => {
     let old = olded;
     let result = "";
@@ -69,9 +66,6 @@ $(function() {
       $("#js-section-category").append(listCate);
     });
   //  load thương hiệu brand
-  $.get('urlBrand', function(data) {
-    console.log(data);
-  });
   fetch(urlBrand, { method: 'GET' })
     .then(res => res.json())
     .then(data => {
@@ -178,10 +172,10 @@ $(function() {
     // let id = $(this).data("id");
     localStorage.setItem("id_detail", $(this).data("id"));
   });
-  const LoadCartItem = (product, quantity) => {
+  const LoadCartItem = (product, quantity, TotalPayment) => {
       let _html = `<tr class="cart-item js-cart-item" data-id="${product.id}" >
               <td class="info-prd">
-                <i class="fal fa-times-circle js-del-cart"></i>
+                <i class="fal fa-times-circle"></i>
                 <figure class="figure">
                   <img class="figure-img img-fluid" src="./public/images/products/${product.image}" alt="">
                 </figure>
@@ -193,179 +187,131 @@ $(function() {
               <td>
                 <div class="choose-number mt-2 mb-2">
                   <input type="hidden" class="quantity" name="quantity[${product.id}]" value="${quantity}">
-                  <div class="abate js-change-quantity ${(quantity > 1)? "active": ""}" data-change="abate" id="abate"><i class="fal fa-minus"></i></div>
+                  <div class="abate js-change-quantity ${(quantity > 1)? "active": ""}" change="abate" id="abate"><i class="fal fa-minus"></i></div>
                   <div class="number">${quantity}</div>
-                  <div class="augment js-change-quantity active" data-change="augment" id="augment"><i class="fal fa-plus"></i></div>
+                  <div class="augment js-change-quantity active" change="augment" id="augment"><i class="fal fa-plus"></i></div>
                 </div>
               </td>
               <td class="text-right">
                 <div class="prd-price font-weight-bold"><strong class="js-prd-price">${FormatCurrency(Number(product.price)* quantity)}</strong> ₫</div>
               </td>
             </tr>`;
-      $("#js-list-cart").append(_html);
+      $("#list-cart").append(_html);
+
       // change quantity 
       $(document).on('click', `.js-cart-item[data-id=${product.id}] .js-change-quantity`, function() {
+        // console.log($(this)[0]);
         let current_quantity = $(this).siblings(".quantity").first().val();
+        // console.log(current_quantity);
         $(`.js-cart-item[data-id=${product.id}] .js-prd-price`).text(FormatCurrency(Number(product.price) * current_quantity));
         let listCart = localStorage.getItem("cart");
+        console.log("Danh sách cũ ==========");
+        console.log(listCart);
         listCart = JSON.parse(listCart);
-
-        // update totalPayment
-        if ($(this).data('change') == "abate") {
-          if (listCart[product.id] > 1) {
-            SetTotalPayment(Number(product.price), 1, false);
-          }
-        } else {
-          if (listCart[product.id] < 20) {
-            SetTotalPayment(Number(product.price), 1, true);
-          }
-        }
-        // update quantity
         listCart[product.id] = current_quantity;
         localStorage.setItem("cart", JSON.stringify(listCart));
-        // load lại tông payment
-        PaymentView();
-      });
-      // Delete item cart
-      $(document).on('click', `.js-cart-item[data-id=${product.id}] .js-del-cart`, function() {
-        let listCart = localStorage.getItem("cart");
-        console.log(listCart);
-        listCart = JSON.parse(listCart);
-        console.log(listCart);
-        // tinhs lai totalPayment
-        SetTotalPayment(Number(product.price), Number(listCart[product.id]), false);
-        //  xoa khoi cart 
-        delete listCart[product.id];
-        console.log(listCart);
-        localStorage.setItem("cart", JSON.stringify(listCart));
-        PaymentView();
-        $(this).parents(`[data-id=${product.id}]`).remove();
+        console.log("Danh sách mới ++++++++");
+        console.log(localStorage.getItem("cart"));
+        // ================
 
-        if (Object.keys(listCart).length == 0) {
-          window.localStorage.clear();
-          window.location.reload();
+      });
+    }
+    // const makeRequest = async(urlPrd, key, quantity, LoadCartItem) => {
+    //   const response = await fetch(`${urlPrd}/${key}`);
+    //   const json = await response.json();
+    //   // console.log(json);
+    //   LoadCartItem(json, quantity);
+    // };
+
+  // window.localStorage.clear();
+  // Promise 
+  const LoadViewCart = new Promise((resolve, reject) => {
+
+    let strCart = localStorage.getItem("cart");
+    let listCart = JSON.parse(strCart);
+    $("#count-cart").text(Object.keys(listCart).length);
+    return resolve(listCart);
+  });
+  LoadViewCart
+    .then((listCart) => {
+      return new Promise((resolve, reject) => {
+        for (const key in listCart) {
+          fetch(`${urlPrd}/${key}`, { method: 'GET' })
+            .then(res => res.json())
+            .then(data => {
+              LoadCartItem(data, listCart[key]);
+              SetTotalPayment(data.price, listCart[key]);
+            });
         }
+        return resolve();
       })
-    }
-    //  Load payment item
-  const LoadPaymentItem = (product, quantity) => {
-      let _html = `<tr data-id="${product.id}">
-                  <td>
-                    <div class="prd-name">
-                    ${product.name}
-                      <strong class="prd-quantity">× ${quantity}</strong>
-                    </div>
-                  </td>
-                  <td class="text-right">
-                    <input type="hidden" name="price[${product.id}]" value="${product.price}">
-                    <div class="prd-price"><strong>${FormatCurrency(Number(product.price)* quantity)} ₫</strong></div>
-                  </td>
-                </tr>`;
-      $("#js-list-payment").append(_html);
-    }
-    // window.localStorage.clear();
-    // Set totalPayment =====================
-  const SetTotalPayment = (price, quantity, expression = true) => {
+    }).then(() => {
+      return new Promise((resolve, reject) => {
+        PaymentView();
+        return resolve();
+      })
+    });
+
+  const SetTotalPayment = (price, quantity) => {
     let currentTotal = Number(price) * Number(quantity);
     let totalOld = Number(localStorage.getItem("total_payment"));
-    localStorage.setItem("total_payment", (expression) ? totalOld + currentTotal : totalOld - currentTotal);
+    localStorage.setItem("total_payment", currentTotal + totalOld);
   };
-  // end Set totalPayment =====================
 
-  // Show PaymentView =====================
   const PaymentView = () => {
-      let totalPayment = Number(localStorage.getItem("total_payment"));
-      $("#js-total-payment").text(FormatCurrency(totalPayment));
-      $("#js-total-vat").text(FormatCurrency(totalPayment / 10));
-      $("#js-final-total").text(FormatCurrency(totalPayment + totalPayment / 10));
-    }
-    // End PaymentView =====================
+    let totalPayment = Number(localStorage.getItem("total_payment"));
+    console.log(totalPayment);
+    $("#js-total-payment").text(FormatCurrency(totalPayment));
+    $("#js-total-vat").text(FormatCurrency(totalPayment / 10));
+    $("#js-final-total").text(FormatCurrency(totalPayment + totalPayment / 10));
+  }
 
 
-  // page cart
+  // cart page
   if (typeof localStorage.getItem('cart') !== "undefined" && localStorage.getItem('cart') !== null) {
     // layout content
     $("#js-cart-empty").hide();
     $("#js-cart-not-empty").show();
     localStorage.setItem("total_payment", "");
-    let strCart = localStorage.getItem("cart");
-    let listCart = JSON.parse(strCart);
-    if (listCart) {
-      $("#count-cart").text(Object.keys(listCart).length);
-    } else {
-      $("#count-cart").text("");
-    }
-    let arrKey = Object.keys(listCart);
-    let filterId = arrKey.join("&id=");
-    filterId = "id=" + filterId;
-    fetch(`${urlPrd}?${filterId}`, { method: 'GET' })
-      .then(res => res.json())
-      .then(data => {
-        for (const key in data) {
-          LoadCartItem(data[key], listCart[data[key].id]);
-          LoadPaymentItem(data[key], listCart[data[key].id]);
-          SetTotalPayment(data[key].price, listCart[data[key].id], true);
-        }
-        PaymentView();
-      });
-    // page payment
+    const loadPageCart = LoadViewCart;
   } else {
     console.log("chưa có cart");
     $("#count-cart").text("");
     $("#js-cart-empty").show();
     $("#js-cart-not-empty").hide();
   }
-  const InsertOrderDetail = (order_id) => {
-    let strCart = localStorage.getItem("cart");
-    let listCart = JSON.parse(strCart);
-    for (const key in listCart) {
-      fetch(urlOrderDetail, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            order_id: order_id,
-            product_id: key,
-            quantity: listCart[key],
-            price: $(`input[name="price[${key}]"]`).first().val()
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
 
-        });
-    }
-    alert("Bạn đã đặt hàng thành công. Sẽ có Nhân viên liện hệ xác nhận đơn hàng! Cảm ơn sự tin dùng của bạn");
-    localStorage.removeItem("cart");
-    localStorage.removeItem("total_payment");
-    $("#js-payment").reset();
-  }
-  $(document).on('click', '#js-order', () => {
-    fetch(`${urlOrder}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: $("#name").val(),
-          gender: $('input[name=gender]:checked').val(),
-          address: $("#address").val(),
-          phone: $("#phone").val(),
-          email: $("#email").val(),
-          phone: $("#phone").val(),
-          note: $("#note").val(),
-          active: '0',
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        InsertOrderDetail(data.id);
-      });
+  // function Abc(key, listCart) {
+  //   fetch(`${urlPrd}/${key}`, { method: 'GET' })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       CartItem(data, listCart[key]);
+  //       // tính total payment
+  //       let currentTotal = Number(data.price) * Number(listCart[key]);
+  //       let totalOld = Number(localStorage.getItem("total_payment"));
+  //       // set total_payment
+  //       localStorage.setItem("total_payment", currentTotal + totalOld);
+  //       // show ra view total
 
-  });
+  //       // let totalPayment = Number(localStorage.getItem("total_payment"));
+  //       // $("#js-total-payment").text(FormatCurrency(totalPayment));
+  //       // $("#js-total-vat").text(FormatCurrency(totalPayment / 10));
+  //       // $("#js-final-total").text(FormatCurrency(totalPayment + totalPayment / 10));
+  //     });
+  //   PaymentView();
+  // }
 
-  // page detail 
+
+
+
+
+
+
+
+
+
+
+  // page detail.html 
   if (typeof localStorage.getItem('id_detail') !== "undefined" && localStorage.getItem('id_detail') !== null) {
     fetch(`${urlPrd}/${localStorage.getItem('id_detail')}`, { method: 'GET' })
       .then(res => res.json())
@@ -431,7 +377,7 @@ $(function() {
   // window.localStorage.clear();
   // số lượng(quantity) khi buy,order
   $(document).on("click", ".js-change-quantity", function() {
-    let current = $(this).data("change");
+    let current = $(this).attr("change");
     let quantity = Number($(this).siblings(".number").first().text());
     switch (current) {
       case "abate":
@@ -468,7 +414,6 @@ $(function() {
   });
   //  nhấn mua
   $(document).on("click", '#js-add-cart', function() {
-    console.log("jsaddcarrt");
     let quantity = Number($("#quantity").val());
     let prd_id = $("input#prd-id").val();
     if (typeof localStorage.getItem("cart") === "undefined" || localStorage.getItem("cart") === null) {

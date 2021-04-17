@@ -117,11 +117,12 @@
             <strong id="prd-price"></strong>
           </div>
           <div class="choose-number mt-2 mb-2">
+            <input type="hidden" name="img" id="prd-image">
             <input type="hidden" class="product_id" name="product_id" id="prd-id">
             <input type="hidden" class="quantity" name="quantity" id="quantity" value="1">
-            <div class="abate js-change-quantity" change="abate" id="abate"><i class="fal fa-minus"></i></div>
+            <div class="abate js-change-quantity" data-change="abate" id="abate"><i class="fal fa-minus"></i></div>
             <div class="number">1</div>
-            <div class="augment js-change-quantity active" change="augment" id="augment"><i class="fal fa-plus"></i></div>
+            <div class="augment js-change-quantity active" data-change="augment" id="augment"><i class="fal fa-plus"></i></div>
           </div>
           <a href="cart.html" class="btn btn-red waves-effect waves-light" id="js-add-cart">THÊM VÀO GIỎ</a>
           <div class="prd-meta mt-3">

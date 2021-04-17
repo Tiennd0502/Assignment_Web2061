@@ -320,7 +320,7 @@ $(function() {
       })
 
       // thực hiện thêm img mới
-      // check những file thêm mới nhưng lại hủy
+      // // check những file thêm mới nhưng lại hủy
       // let delEdit = $("input[name='delete_edit-library[]']")
       //   .map(function() { return $(this).val(); }).get();
       // for (const key in delEdit) {

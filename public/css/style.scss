@@ -291,10 +291,16 @@ body {
     text-align: center;
     i {
       font-weight: bold;
+      &:hover {
+        color: $Red;
+      }
     }
     &.active {
       i {
         color: #288ad6;
+        &:hover {
+          color: $Red;
+        }
       }
     }
   }
@@ -316,10 +322,16 @@ body {
     &.active {
       i {
         color: #288ad6;
+        &:hover {
+          color: $Red;
+        }
       }
     }
     i {
       font-weight: bold;
+      &:hover {
+        color: $Red;
+      }
     }
   }
 }
@@ -566,6 +578,7 @@ body {
     .info-prd {
       @include flex(row, flex-start, center);
       i {
+        cursor: pointer;
         margin-right: 10px;
         font-size: 20px;
         &:hover {
@@ -656,7 +669,10 @@ body {
   .table {
     font-size: 14px;
     td {
-      color: $Grey;
+      // color: $Grey;
+      &.prd-price {
+        color: $Red;
+      }
     }
     tfoot {
       tr {
@@ -686,6 +702,27 @@ body {
 
 .fs-14 {
   font-size: 14px;
+}
+
+// page products
+.page-title {
+  .container {
+    @include flex(row, space-between);
+    .box-left {
+      align-items: center;
+      .breadcrumb {
+        margin-bottom: 0;
+      }
+    }
+    .box-right {
+      @include flex(row);
+      align-items: center;
+      .form-control {
+        width: fit-content;
+      }
+    }
+  }
+  background-color: $Border;
 }
 
 // Large devices (desktops, less than 1200px)
