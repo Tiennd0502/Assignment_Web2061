@@ -10,19 +10,19 @@
       "name": "Boots",
       "slug": "Boots",
       "image": "ico_2.jpg",
-      "id": 2
+      "id": 4
     },
     {
       "name": "Cao gót",
       "slug": "Cao-got",
       "image": "ico_3.jpg",
-      "id": 3
+      "id": 2
     },
     {
       "name": "Thể thao",
       "slug": "The-thao",
       "image": "ico_4.jpg",
-      "id": 4
+      "id": 3
     },
     {
       "name": "Đế gỗ",
@@ -1442,12 +1442,8 @@
       "phone": "0979081574",
       "email": "Tienndpd03947@fpt.edu.vn",
       "note": "Giao hàng nhanh nhé Admin",
-      "active": "1",
+      "active": "0",
       "id": 1
-    },
-    {
-      "active": "1",
-      "id": 2
     },
     {
       "name": "Hà Hồ",
@@ -1457,7 +1453,7 @@
       "email": "haho@gmail.com",
       "note": "",
       "active": "1",
-      "id": 3
+      "id": 2
     },
     {
       "name": "Hoàng Anh",
@@ -1466,6 +1462,16 @@
       "phone": "0934556886",
       "email": "hoanganh@gmail.com",
       "note": "Giao k là k nahạn",
+      "active": "0",
+      "id": 3
+    },
+    {
+      "name": "Nguời dùng",
+      "gender": "1",
+      "address": "Hôji An",
+      "phone": "0236036036",
+      "email": "nguoidung@fpt.edu.vn",
+      "note": "Giao đúng địa chỉ ",
       "active": "0",
       "id": 4
     }
@@ -1480,52 +1486,66 @@
     },
     {
       "order_id": 2,
-      "product_id": "4",
-      "quantity": 1,
-      "price": "525000",
-      "id": 2
-    },
-    {
-      "order_id": 2,
-      "product_id": "6",
-      "quantity": 1,
-      "price": "545000",
-      "id": 3
-    },
-    {
-      "order_id": 3,
       "product_id": "33",
       "quantity": "2",
       "price": "465000",
       "id": 4
     },
     {
-      "order_id": 3,
+      "order_id": 2,
       "product_id": "44",
       "quantity": 1,
       "price": "495000",
       "id": 5
     },
     {
-      "order_id": 4,
+      "order_id": 3,
       "product_id": "4",
       "quantity": 3,
       "price": "525000",
       "id": 6
     },
     {
-      "order_id": 4,
+      "order_id": 3,
       "product_id": "11",
       "quantity": "1",
       "price": "1090000",
       "id": 7
     },
     {
-      "order_id": 4,
+      "order_id": 3,
       "product_id": "14",
       "quantity": "2",
       "price": "1490000",
       "id": 8
+    },
+    {
+      "order_id": 4,
+      "product_id": "11",
+      "quantity": 1,
+      "price": "1090000",
+      "id": 9
+    },
+    {
+      "order_id": 4,
+      "product_id": "12",
+      "quantity": 2,
+      "price": "1590000",
+      "id": 10
+    },
+    {
+      "order_id": 4,
+      "product_id": "15",
+      "quantity": 1,
+      "price": "1990000",
+      "id": 11
+    },
+    {
+      "order_id": 4,
+      "product_id": "14",
+      "quantity": 3,
+      "price": "1490000",
+      "id": 12
     }
   ]
 }

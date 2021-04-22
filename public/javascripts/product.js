@@ -38,9 +38,7 @@ $(function() {
     length = data.length;
     renderPagi(length, _limit, _currentPage);
   });
-
-  // $("#datatable").DataTable();
-
+  // pagination product page
   const renderPagi = (length, limit, currentPage, options = {}) => {
       let totailPage = length / limit;
       let pagi = '';
@@ -122,7 +120,6 @@ $(function() {
     } else {
       console.log('k có filter');
     }
-
   });
   // end filter product
 
@@ -197,7 +194,6 @@ $(function() {
       idPrd = product.id;
       CKEDITOR.instances['DescUpdate'].setData(product.desc);
       $('#showImg').attr('src', `public/images/products/${product.image}`);
-
       $.ajax({
           url: `${urlProductImg}?product_id=${product.id}`,
           type: 'GET',
@@ -290,7 +286,6 @@ $(function() {
           },
         })
         .done((data) => {
-
           editFormPrd.reset();
           $('.img-box').addClass('d-none');
           CKEDITOR.instances['DescUpdate'].setData('');
@@ -318,21 +313,6 @@ $(function() {
             });
         }
       })
-
-      // thực hiện thêm img mới
-      // // check những file thêm mới nhưng lại hủy
-      // let delEdit = $("input[name='delete_edit-library[]']")
-      //   .map(function() { return $(this).val(); }).get();
-      // for (const key in delEdit) {
-      //   if (!isNaN(key)) {
-      //     console.log("key:" + key);
-      //     console.log("value:" + delEdit[key]);
-
-      //     // if (value != "") {
-
-      //     // }
-      //   }
-      // }
       let library = $('#attach-view-edit-library input.showImage').prop('files');
       for (const key in library) {
 

@@ -1,5 +1,4 @@
 $(function() {
-  // dơn hàng page extras-invoice.html
   const urlCate = 'http://localhost:3000/categories';
   const urlBrand = 'http://localhost:3000/brands';
   const urlPrd = 'http://localhost:3000/products';
@@ -15,8 +14,7 @@ $(function() {
       number = old;
     } else {
       number = old * (100 - discount) / 100;
-    }
-    890000
+    };
     number = number.toString(10);
     let index = 0;
     for (let i = number.length - 1; i >= 0; i--) {

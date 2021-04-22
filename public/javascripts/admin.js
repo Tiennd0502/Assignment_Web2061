@@ -338,7 +338,7 @@ $(function() {
         let value = $(this).val();
         console.log(value);
         fetch(`${urlOrder}/${data.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
             },
